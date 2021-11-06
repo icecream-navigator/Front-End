@@ -41,7 +41,7 @@
               ></v-text-field>
               <slot name="repeatPassword"/>
             </v-container>
-            <slot name="rememberMe"/>
+            <slot name="checkBox"/>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
