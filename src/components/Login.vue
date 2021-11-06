@@ -3,7 +3,7 @@
     <template v-slot:buttonInscription>
       ZALOGUJ SIĘ
     </template>
-    <template v-slot:rememberMe>
+    <template v-slot:checkBox>
       <v-checkbox
         label="Zapamiętaj mnie"
         hide-details

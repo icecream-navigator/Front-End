@@ -22,6 +22,13 @@
         required
       ></v-text-field>
     </template>
+    <template v-slot:checkBox>
+      <v-checkbox
+        v-model="registration.is_admin"
+        label="Jestem właścicielem firmy"
+        hide-details
+      ></v-checkbox>
+    </template>
     <template v-slot:action>
       zarejestruj się
     </template>
@@ -64,7 +71,8 @@ export default {
         name: null,
         email: null,
         password: null,
-        password_confirmation: null
+        password_confirmation: null,
+        is_admin: false
       },
       whetherToDisplay: false,
       communique: {
