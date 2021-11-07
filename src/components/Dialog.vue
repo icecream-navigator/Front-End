@@ -62,18 +62,18 @@
               <button>
                 <font-awesome :icon="['fab', 'facebook-square']"/>
               </button>
-                <GoogleLogin 
-                  :params="params"
-                  :onSuccess="getTokenGoogle"
-                >
-                  <font-awesome id="google" :icon="['fab', 'google']"/>
-                </GoogleLogin>
+              <GoogleLogin 
+                :params="params"
+                :onSuccess="getTokenGoogle"
+              >
+                <font-awesome :icon="['fab', 'google']"/>
+              </GoogleLogin>
             </div>
           </div>
         </v-card>
       </v-dialog>
     </v-row>
-    <Announcement 
+    <Announcement
       v-if="whetherToDisplay"
       @close="closeTheMessage"
       >
