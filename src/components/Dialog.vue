@@ -59,15 +59,13 @@
               <slot name="action"/>
             przez</span>
             <div id="icons">
-              <button>
-                <font-awesome :icon="['fab', 'facebook-square']"/>
-              </button>
-                <GoogleLogin 
-                  :params="params"
-                  :onSuccess="getTokenGoogle"
-                >
-                  <font-awesome id="google" :icon="['fab', 'google']"/>
-                </GoogleLogin>
+              <facebook-login appId="997146227801816"/>
+              <GoogleLogin 
+                :params="params"
+                :onSuccess="getTokenGoogle"
+              >
+                <font-awesome id="google" :icon="['fab', 'google']"/>
+              </GoogleLogin>
             </div>
           </div>
         </v-card>
@@ -97,6 +95,7 @@
 import Announcement from './Announcement.vue'
 
 import GoogleLogin from 'vue-google-login'
+import FacebookLogin from 'facebook-login-vuejs';
 
 import axios from 'axios'
 
@@ -104,14 +103,15 @@ export default {
   name: 'Dialog',
   components: {
     Announcement,
-    GoogleLogin
+    GoogleLogin,
+    FacebookLogin
   },
   data: () => ({
     dialog: false,
     email: null,
     password: null,
     params: {
-      client_id: "330533625286-5673scc40rk9b1osng7un882f14bj3o1.apps.googleusercontent.com"
+      client_id: process.env.VUE_APP_CLIENT_ID
     },
     social: {
       _token: null,
@@ -132,6 +132,14 @@ export default {
       this.social._provider = 'google'
 
       this.sendingToken()
+    },
+    getUserData() {
+      this.FB.api('/me', 'GET', { fields: 'id,name,email' },
+        userInformation => {
+          console.warn("data api",userInformation)
+          alert(userInformation.name)
+        }
+      )
     },
     sendingToken() {
       this.whetherToDisplay = true
@@ -217,6 +225,39 @@ export default {
 
       display: flex;
       justify-content: space-around;
+      .container {
+        margin: 0px;
+        padding: 0px;
+
+        width: 40px;
+        height: 40px;
+        button {
+          position: none;
+          padding: 0px;
+          line-height: 0px;
+          color: black;
+          min-width: 0px;
+          background: url(./../assets/fb.png);
+          background-size: 40px;
+          font-size: 50px;
+
+          padding-bottom: 5px;
+          width: 40px;
+          height: 40px;
+
+          text-indent: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+
+          position: relative;
+          .spinner {
+            display: none;
+          }
+          img {
+            display: none;
+          }
+        }
+      }
     }
   }
 }
