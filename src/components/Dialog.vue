@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div>
     <v-row justify="center">
       <v-btn
@@ -24,6 +25,77 @@
           </button>
           <div id="circle">
             <img id ="logo" alt="logo" src="@/assets/logo.png">
+=======
+  <v-row
+    v-resize="onResize"
+    justify="center"
+    >
+    <v-btn
+      id="buttonPortait"
+      class="button"
+      @click="dialog = true, hideMenu()"
+      >
+      <b>
+        <slot name="buttonInscription"/>
+      </b>
+    </v-btn>
+    <v-dialog
+      v-model="dialog"
+      persistent
+      max-width="325px"
+      >
+      <v-card id="card">
+        <button
+          id="close"
+          @click="dialog = false"
+          >
+          <font-awesome :icon="['fas', 'times']"/>
+        </button>
+        <div id="circle">
+          <img id ="logo" alt="logo" src="@/assets/logo.png">
+        </div>
+        <v-card-text>
+          <v-container>
+            <slot name="v-text-field"/>
+            <v-text-field
+              v-model="email"
+              label="Email"
+              required
+              ></v-text-field>
+            <v-text-field
+              v-model="password"
+              type="password"
+              label="Hasło"
+              required
+              ></v-text-field>
+            <slot name="repeatPassword"/>
+          </v-container>
+          <slot name="rememberMe"/>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            id="buttonLogIn"
+            block
+            color="blue darken-1"
+            @click="provideTheData"
+            >
+            <slot name="action"/>
+          </v-btn>
+        </v-card-actions>
+        <div id="otherLogins">
+          <span>lub
+            <slot name="action"/>
+            przez</span>
+          <div id="icons">
+            <button @click="fb">
+              <font-awesome :icon="['fab', 'facebook-square']"/>
+            </button>
+            <!--<button @click="google">-->
+            <!--<font-awesome id="google" :icon="['fab', 'google']"/>-->
+            <!--</button>-->
+            <button v-on:click="Google">Google</button>
+>>>>>>> 46fd2d55acbcd2b7cfef0a6d6e85ee85b3c76a60
           </div>
           <v-card-text>
             <v-container>
@@ -99,6 +171,7 @@ import FacebookLogin from 'facebook-login-vuejs';
 
 import axios from 'axios'
 
+
 export default {
   name: 'Dialog',
   components: {
@@ -108,8 +181,10 @@ export default {
   },
   data: () => ({
     dialog: false,
+    token: 'ya29.a0ARrdaM-mbIJWMHkXZtRUw0wx1XsIefPiMigiw-Hs5YsnATDhppN6KRJofuFaFgYWFCwyyqEfl7sy7Z7nJY8NzsfSVfvNl8VqFqfNC54si2uPaHSpobgwYT4ysUc9zGBDymAR7E5MMTviBwDjhQ7WUmTxtRukQA',
     email: null,
     password: null,
+<<<<<<< HEAD
     params: {
       client_id: process.env.VUE_APP_CLIENT_ID
     },
@@ -121,6 +196,12 @@ export default {
     communique: {
       symbol: null,
       contents: null
+=======
+    apiresponse: null,
+    windowSize: {
+      x: 0,
+      y: 0
+>>>>>>> 46fd2d55acbcd2b7cfef0a6d6e85ee85b3c76a60
     }
   }),
   methods: {
@@ -133,6 +214,7 @@ export default {
 
       this.sendingToken()
     },
+<<<<<<< HEAD
     getUserData() {
       this.FB.api('/me', 'GET', { fields: 'id,name,email' },
         userInformation => {
@@ -171,9 +253,27 @@ export default {
     },
     hideMenu() {
       this.$emit('hideMenu')
+=======
+
+    Google: function() {
+
+      axios.post('http://localhost:8081/api/provider/callback', {
+        '_method': 'get',
+        '_token' : this.token,
+        '_provider' : 'google',
+      }).then(response => {
+        this.apiresponse = response.data
+      });
+      console.warn(this.apiresponse);
+>>>>>>> 46fd2d55acbcd2b7cfef0a6d6e85ee85b3c76a60
     }
   }
 }
+
+
+
+
+
 </script>
 
 <style lang="scss">
