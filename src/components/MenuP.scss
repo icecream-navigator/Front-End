@@ -17,13 +17,12 @@
   
       border-radius: 50%;
       background-color: #ffcf7f;
+
+      overflow:hidden;
   
       display: flex;
       justify-content: center;
       align-items: center;
-      img {
-        width: 2.75vw;
-      }
     }
 
     #buttonMenu {

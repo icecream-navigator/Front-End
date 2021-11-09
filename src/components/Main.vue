@@ -1,7 +1,7 @@
 <template>
   <div id="containerMain">
     <div id="leftBox">
-      <h1>INC</h1>
+      <h1>ICN</h1>
       <h2>Your Ice Cream Navigator</h2>
     </div>
     <div id="rightBox">
