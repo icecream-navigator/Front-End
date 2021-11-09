@@ -142,6 +142,8 @@ export default {
       {
         this.communique.symbol = "check-circle"
         this.communique.contents = "Akcja się powiodła"
+
+        this.$emit('user', response.data)
       }
       })
       .catch(error => {

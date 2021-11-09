@@ -3,6 +3,7 @@
     <Dialog
       @hideMenu="hideMenu"
       @emailAndPassword="sendingData"
+      @user="provideUserData"
       >
       <template v-slot:buttonInscription>
         ZALOGUJ SIĘ
@@ -73,9 +74,7 @@ export default {
       .then(response => {
       if (response)
       {
-        this.communique.symbol = "check-circle"
-        this.communique.contents = "Zalogowano się"
-        console.log(response.data)
+        this.provideUserData(response.data);
       }
       })
       .catch(error => {
@@ -103,6 +102,9 @@ export default {
     closeTheMessage() {
       this.communique.contents = null
       this.whetherToDisplay = false
+    },
+    provideUserData(data) {
+      this.$emit('user', data)
     },
     hideMenu() {
       this.$emit('hideMenu')
