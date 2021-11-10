@@ -25,10 +25,10 @@
       </li>
       <li>
         <component :is="selectedComponent2"
-        @hideMenu="menuStatusChange"
-        
-        @logOut="logOut"
-        />
+        @hideMenu="menuStatusChange"/>
+      </li>
+        <component :is="selectedComponent3" @logOut="logOut"/>
+      <li>
       </li>
     </ul>
     <center>Robert Klinger i Krzysztof Picur © 2021 prawa zastrzeżone</center>
@@ -40,6 +40,7 @@ import Login from './Login.vue'
 import Registration from './Registration.vue'
 
 import CompanyManagment from './CompanyManagment.vue'
+import Favorite from './Favorite.vue'
 import LogOut from './LogOut.vue'
 
 import image from "@/assets/avatar.png"
@@ -50,12 +51,14 @@ export default{
     Login,
     Registration,
     CompanyManagment,
+    Favorite,
     LogOut
   },
   data() {
     return {
       selectedComponent1: Login,
       selectedComponent2: Registration,
+      selectedComponent3: null,
       avatarImage: image,
       avatarSize: 4.15,
       menu: false,
@@ -84,7 +87,8 @@ export default{
 
       this.avatarSize = 13
 
-      this.selectedComponent2 = LogOut
+      this.selectedComponent2 = Favorite
+      this.selectedComponent3 = LogOut
     },
     logOut() {
       this.avatarImage = image
@@ -92,6 +96,7 @@ export default{
 
       this.selectedComponent1 = Login
       this.selectedComponent2 = Registration
+      this.selectedComponent3 = null
     },
     menuStatusChange() {
       if (this.menu)
