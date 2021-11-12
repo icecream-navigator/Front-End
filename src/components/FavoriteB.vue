@@ -3,7 +3,7 @@
     <v-btn
       id="buttonPortait"
       class="button"
-      @click="hideMenu"
+      @click="event(), hideMenu()"
       >
       <b>
         ULUBIONE
@@ -14,8 +14,11 @@
 
 <script>
 export default {
-  name: "CompanyManagment",
+  name: "FavoriteB",
   methods: {
+    event() {
+      this.$emit('event', 'Favorite')
+    },
     hideMenu() {
       this.$emit('hideMenu')
     }

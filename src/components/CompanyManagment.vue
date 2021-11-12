@@ -1,43 +1,37 @@
 <template>
-  <div>
-    <v-btn
-      id="buttonPortait"
-      class="button"
-      @click="hideMenu"
-      >
-      <b>
-        ZARZĄDZANIE
-      </b>
-    </v-btn>  
+  <div id="containerCompanyManagment">
+    <div id="addingAnIceCreamParlor">
+      <AddingAnIceCreamParlor :user="user"/>
+    </div>
   </div>
 </template>
 
 <script>
+import AddingAnIceCreamParlor from './AddingAnIceCreamParlor.vue'
+
 export default {
-  name: "CompanyManagment",
-  methods: {
-    hideMenu() {
-      this.$emit('hideMenu')
-    }
-  }
+  name: 'CompanyManagment',
+  components: {
+    AddingAnIceCreamParlor
+  },
+  props: ['user']
 }
 </script>
 
-<style>
-@media (orientation: portrait) {
-  #buttonPortait {
-    padding: 1.565vw !important;
+<style lang="scss">
+@import './CompanyManagmentP.scss';
 
-    width: 100%;
-    height: 10vw !important;
+@media (orientation: landscape) {
+  #containerCompanyManagment {
+    width: 84.4%;
+    background-color: pink;
 
-    border-radius: 0px;
-    justify-content: left;
-    font-size: 4vw !important;
-    letter-spacing: 0px;
-    color: white !important;
-
-    background-color: #ffaf5f !important;
+    position: relative;
+    #addingAnIceCreamParlor {
+      position: absolute;
+      top: 1vw;
+      right: 1vw;
+    }
   }
 }
 </style>

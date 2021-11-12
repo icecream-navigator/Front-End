@@ -111,7 +111,7 @@ export default {
     email: null,
     password: null,
     params: {
-      client_id: "330533625286-5673scc40rk9b1osng7un882f14bj3o1.apps.googleusercontent.com"
+      client_id: process.env.VUE_APP_CLIENT_ID
     },
     social: {
       _token: null,
