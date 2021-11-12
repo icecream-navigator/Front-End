@@ -13,18 +13,22 @@
       <li>
         <v-btn
           class="button"
-          @click="menuStatusChange(), event()"
+          @click="menuStatusChange(), eventSearchEngine()"
         >
           <b>SZUKAJ LODA</b>
         </v-btn>
       </li>
       <li>
-        <component :is="selectedComponent1" 
+        <component :is="selectedComponent1"
+        @event="event"
+
         @hideMenu="menuStatusChange"
         @user="user"/>
       </li>
       <li>
         <component :is="selectedComponent2"
+        @event="event"
+
         @hideMenu="menuStatusChange"/>
       </li>
         <component :is="selectedComponent3" @logOut="logOut"/>
@@ -39,8 +43,8 @@
 import Login from './Login.vue'
 import Registration from './Registration.vue'
 
-import CompanyManagment from './CompanyManagment.vue'
-import Favorite from './Favorite.vue'
+import CompanyManagmentB from './CompanyManagmentB.vue'
+import FavoriteB from './FavoriteB.vue'
 import LogOut from './LogOut.vue'
 
 import image from "@/assets/avatar.png"
@@ -50,8 +54,8 @@ export default{
   components: {
     Login,
     Registration,
-    CompanyManagment,
-    Favorite,
+    CompanyManagmentB,
+    FavoriteB,
     LogOut
   },
   data() {
@@ -77,7 +81,7 @@ export default{
         this.avatarImage = data.user_avatar
         if (data.is_admin)
         {
-          this.selectedComponent1 = CompanyManagment
+          this.selectedComponent1 = CompanyManagmentB
         }
         else
         {
@@ -87,8 +91,10 @@ export default{
 
       this.avatarSize = 13
 
-      this.selectedComponent2 = Favorite
+      this.selectedComponent2 = FavoriteB
       this.selectedComponent3 = LogOut
+
+      this.$emit('user', data)
     },
     logOut() {
       this.avatarImage = image
@@ -110,8 +116,14 @@ export default{
         this.currentMenuStatus = null
       }
     },
-    event() {
-      this.$emit('activateTheSearchEngine')
+    eventSearchEngine() {
+      this.$emit('component', 'SearchEngine')
+    },
+    event(component) {
+      if (this.selectedComponent2 == FavoriteB)
+      {
+        this.$emit('component', component)
+      }
     }
   }
 }

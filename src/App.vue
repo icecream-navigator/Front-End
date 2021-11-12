@@ -1,32 +1,41 @@
 <template>
   <v-app>
     <div id="mainContainer">
-      <Menu @activateTheSearchEngine="activateTheSearchEngine"/>
-      <component :is="selectedComponent"/>
+      <Menu @component="replaceComponent"
+      @user="user"/>
+      <component :is="selectedComponent"
+      :user="userData"/>
     </div>
   </v-app>
 </template>
 
 <script>
 import Menu from './components/Menu.vue'
+
 import Main from './components/Main.vue'
 import SearchEngine from './components/SearchEngine.vue'
+import CompanyManagment from './components/CompanyManagment.vue'
 
 export default {
   name: 'App',
   components: {
     Menu,
     Main,
-    SearchEngine
+    SearchEngine,
+    CompanyManagment
   },
   data() {
     return {
-      selectedComponent: Main
+      selectedComponent: Main,
+      userData: null
     }
   },
   methods: {
-    activateTheSearchEngine() {
-      this.selectedComponent = SearchEngine
+    replaceComponent(component) {
+      this.selectedComponent = component
+    },
+    user(data) {
+      this.userData = data
     }
   }
 }
