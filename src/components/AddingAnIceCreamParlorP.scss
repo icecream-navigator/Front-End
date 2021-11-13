@@ -22,10 +22,16 @@
       align-items: center;
       #addImage {
       margin-top: 10px;
+      position: relative;
         #input {
           margin-left: 5px;
           margin-top: 10px;
           width: 105px;
+        }
+        #span2 {
+          position: absolute;
+          left: 0;
+          bottom: -15px;
         }
       }
       #image {

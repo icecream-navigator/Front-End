@@ -22,8 +22,9 @@
           </button>
           <v-container id="uploadImage">
             <div id="addImage">
-              <span>Dodaj zdjęcie lodziarny:</span>
+              <span id="span1">Dodaj zdjęcie lodziarny:</span>
               <input id="input" type="file" @change="onFileSelected">
+              <span id="span2">(niewymagane)</span>
             </div>
             <img id="image" :style="{'height': height + 'px'}" :src="image">
           </v-container>
@@ -31,7 +32,7 @@
             <v-container>
               <slot name="v-text-field"/>
               <v-text-field
-                v-model="iceCreamShop.name"
+                v-model="name"
                 label="Nazwa lodziarny"
                 required
               ></v-text-field>
@@ -45,11 +46,12 @@
             :zoom="zoom"
             @click="addMarker"
           >
-            <MglGeocoderControl
-              :accessToken="accessToken"
-              :input="defaultInput"
+            <MglGeocoderControl :accessToken="accessToken"/>
+            <MglMarker
+              v-if="coordinates"
+              :coordinates="coordinates"
+              color="blue"
             />
-            <MglMarker :coordinates="coordinates" color="blue"/>
           </MglMap>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -65,10 +67,29 @@
         </v-card>
       </v-dialog>
     </v-row>
+    <Announcement
+      v-if="whetherToDisplay"
+      @close="closeTheMessage"
+      >
+      <template v-slot:content>
+        <template v-if="communique.contents">
+          <font-awesome id="symbol" :icon="['fas', communique.symbol]"/>
+          <span class="content">{{communique.contents}}</span>
+        </template>
+        <v-progress-circular
+          v-else
+          class="content"
+          indeterminate
+          color="green"
+        ></v-progress-circular>
+      </template>
+    </Announcement>
   </div>
 </template>
 
 <script>
+import Announcement from './Announcement.vue'
+
 import { MglMap, MglMarker } from "vue-mapbox"
 import MglGeocoderControl from 'vue-mapbox-geocoder'
 
@@ -77,6 +98,7 @@ import axios from 'axios'
 export default {
   name: 'AddingAniCeCreamParlor',
   components: {
+    Announcement,
     MglMap,
     MglMarker,
     MglGeocoderControl
@@ -89,20 +111,23 @@ export default {
       mapStyle: "mapbox://styles/mapbox/streets-v11",
       center: [19, 52.25],
       zoom: 4.5,
-      coordinates: [0, 0],
+      coordinates: null,
       defaultInput: null,
       image: null,
       height: 0,
-      iceCreamShop: {
-        photo: null,
-        name: null,
-        lat: null,
-        lon: null,
-        town: null,
-        postal_code: null,
-        street: null,
-        place_name: 'null'
-      }
+      formData: new FormData(),
+      name: null,
+      lat: null,
+      lon: null,
+      town: null,
+      postal_code: null,
+      street: null,
+      place_name: null,
+      whetherToDisplay: false,
+      communique: {
+        symbol: null,
+        contents: null
+    }
     }
   },
   created() {
@@ -114,8 +139,8 @@ export default {
       this.image = URL.createObjectURL(file)
 
       this.height = 210
-
-      this.iceCreamShop.photo = file
+      
+      this.formData.append('photo', file)
     },
     addMarker(map) {
       const lngLat = map.mapboxEvent.lngLat
@@ -124,6 +149,7 @@ export default {
       axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lngLat.lng}, ${lngLat.lat}.json?access_token=${process.env.VUE_APP_TOKEN_MAPBOX}`)
         .then(response =>
         {
+          console.log(response.data.features[0])
           this.dataFilter(response.data.features[0])
         })
         .catch(error =>
@@ -131,27 +157,33 @@ export default {
           console.log(error)
         })
 
-      this.iceCreamShop.lat = lngLat.lat
-      this.iceCreamShop.lon = lngLat.lng
+      this.formData.append('lat', lngLat.lat)
+      this.formData.append('lon', lngLat.lng)
     },
     dataFilter(place_name) {
-      this.iceCreamShop.town = place_name.context[1].text
-      this.iceCreamShop.postal_code = place_name.context[0].text
+      this.formData.append('town', place_name.context[1].text)
+      this.formData.append('postal_code', place_name.context[0].text)
 
       if (place_name.address)
       {
-        this.iceCreamShop.street = place_name.text + " " + place_name.address
-        this.iceCreamShop.place_name = 'null'
+        this.formData.append('street', place_name.text + " " + place_name.address)
       }
       else
       {
-        this.iceCreamShop.street = place_name.properties.address
-        this.iceCreamShop.place_name = place_name.text
+        if (place_name.properties.address)
+        {
+          this.formData.append('street', place_name.properties.address)
+          this.formData.append('place_name', place_name.text)
+        }
+        else
+        {
+          this.formData.append('street', place_name.text)
+        }
       }
-
-      console.log(this.iceCreamShop)
     },
     sendingData() {
+      this.formData.append('name', this.name)
+
       const config = {
         headers: { 
           'Authorization': `Bearer ${this.user.access_token}`,
@@ -159,18 +191,45 @@ export default {
         }
       }
 
-      axios.post("https://citygame.ga/api/stall/create", this.iceCreamShop, config)
-        .then(response =>
+      this.whetherToDisplay = true
+
+      axios.post("https://citygame.ga/api/stall/create", this.formData, config)
+        .then(response => {
+        if (response)
         {
-          console.log(response)
+          this.communique.symbol = "check-circle"
+          this.communique.contents = "Utworzono lodziarne"
+        }
         })
-    }
+        .catch(error => {
+          this.communique.symbol = "times-circle"
+
+          if (!error.response)
+          {
+            this.communique.contents = "Brak połączenia, spróbuj ponownie później"
+          }
+          else 
+          {
+            this.communique.contents = "Uzupełnij pola"
+          }
+        })
+
+      this.formData.delete('place_name')
+    },
+    closeTheMessage() {
+      this.communique.contents = null
+      this.whetherToDisplay = false
+    },
   }
 }
 </script>
 
 <style lang="scss">
 @import './AddingAnIceCreamParlorP.scss';
+
+#span2 {
+  font-size: 11px;
+}
 
 @media (orientation: landscape) {
   #button {
@@ -205,9 +264,13 @@ export default {
         display: flex;
         flex-direction: column;
         position: relative;
-        span {
+        #span1 {
           position: absolute;
           bottom: 30px;
+        }
+        #span2 {
+          position: absolute;
+          bottom: -17px;
         }
         #input {
           position: absolute;
@@ -230,7 +293,7 @@ export default {
         right: auto;
       }
     }
-    @media only screen and (max-width: 1000px) {
+    @media (max-width: 1000px) {
       #image {
         height: 25vw !important;
       }
