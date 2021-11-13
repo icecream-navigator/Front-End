@@ -149,12 +149,12 @@ export default {
       axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lngLat.lng}, ${lngLat.lat}.json?access_token=${process.env.VUE_APP_TOKEN_MAPBOX}`)
         .then(response =>
         {
-          console.log(response.data.features[0])
           this.dataFilter(response.data.features[0])
         })
         .catch(error =>
         {
-          console.log(error)
+          this.communique.symbol = "times-circle"
+          this.communique.contents = error
         })
 
       this.formData.append('lat', lngLat.lat)
@@ -203,14 +203,23 @@ export default {
         })
         .catch(error => {
           this.communique.symbol = "times-circle"
-
+        
           if (!error.response)
           {
             this.communique.contents = "Brak połączenia, spróbuj ponownie później"
           }
           else 
           {
-            this.communique.contents = "Uzupełnij pola"
+            const status = error.response.status
+
+            if (status == 422)
+            {
+              this.communique.contents = "Uzupełnij dane"
+            }
+            else
+            {
+              this.communique.contents = error
+            }
           }
         })
 
