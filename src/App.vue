@@ -1,10 +1,16 @@
 <template>
   <v-app>
     <div id="mainContainer">
-      <Menu @component="replaceComponent"
-      @user="user"/>
-      <component :is="selectedComponent"
-      :user="userData"/>
+      <Menu
+        @component="replaceComponent"
+        @user="user"
+        @companyManagment="companyManagment"
+      />
+      <component
+        :is="selectedComponent"
+        :user="userData"
+        :companyManagment="companyManagmentData"
+      />
     </div>
   </v-app>
 </template>
@@ -27,7 +33,8 @@ export default {
   data() {
     return {
       selectedComponent: Main,
-      userData: null
+      userData: null,
+      companyManagmentData: null
     }
   },
   methods: {
@@ -36,6 +43,9 @@ export default {
     },
     user(data) {
       this.userData = data
+    },
+    companyManagment(data) {
+      this.companyManagmentData = data
     }
   }
 }

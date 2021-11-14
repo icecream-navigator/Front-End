@@ -146,7 +146,7 @@ export default {
       const lngLat = map.mapboxEvent.lngLat
       this.coordinates = [lngLat.lng, lngLat.lat]
 
-      axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lngLat.lng}, ${lngLat.lat}.json?access_token=${process.env.VUE_APP_TOKEN_MAPBOX}`)
+      axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lngLat.lng}, ${lngLat.lat}.json?access_token=${this.accessToken}`)
         .then(response =>
         {
           this.dataFilter(response.data.features[0])
