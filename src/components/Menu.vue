@@ -21,9 +21,12 @@
       <li>
         <component :is="selectedComponent1"
         @event="event"
-
         @hideMenu="menuStatusChange"
-        @user="user"/>
+
+        @user="user"
+
+        @companyManagment="companyManagment"
+        :user="userData"/>
       </li>
       <li>
         <component :is="selectedComponent2"
@@ -63,6 +66,7 @@ export default{
       selectedComponent1: Login,
       selectedComponent2: Registration,
       selectedComponent3: null,
+      userData: null,
       avatarImage: image,
       avatarSize: 4.15,
       menu: false,
@@ -94,6 +98,7 @@ export default{
       this.selectedComponent2 = FavoriteB
       this.selectedComponent3 = LogOut
 
+      this.userData = data
       this.$emit('user', data)
     },
     logOut() {
@@ -124,6 +129,9 @@ export default{
       {
         this.$emit('component', component)
       }
+    },
+    companyManagment(data) {
+      this.$emit('companyManagment', data)
     }
   }
 }
