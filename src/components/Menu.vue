@@ -143,8 +143,9 @@ export default{
 @media (orientation: landscape) {
   #containerMenu {
     width: 15.6%;
+    height: 100vh;
     background-color: #ff9e4f;
-    position: relative;
+    position: fixed;
     #profile {
       margin: 1.3vw auto 1.3vw;
 
@@ -154,7 +155,7 @@ export default{
       border-radius: 50%;
       background-color: #ffcf7f;
 
-      overflow:hidden;
+      overflow: hidden;
 
       display: flex;
       justify-content: center;

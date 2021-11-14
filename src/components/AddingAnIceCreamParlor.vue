@@ -161,8 +161,16 @@ export default {
       this.formData.append('lon', lngLat.lng)
     },
     dataFilter(place_name) {
-      this.formData.append('town', place_name.context[1].text)
-      this.formData.append('postal_code', place_name.context[0].text)
+      place_name.context.forEach(element => {
+        if (element.id.includes("postcode"))
+        {
+          this.formData.append('postal_code', element.text)
+        }
+        if (element.id.includes("place"))
+        {
+          this.formData.append('town', element.text)
+        }
+      })
 
       if (place_name.address)
       {

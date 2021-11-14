@@ -5,7 +5,6 @@
     </div>
     <v-card
       v-for="item in companyManagment" :key="item.id"
-      :loading="loading"
       class="card"
       width="374"
     >
@@ -87,6 +86,7 @@ export default {
 
 @media (orientation: landscape) {
   #containerCompanyManagment {
+    margin-left: 15.6%;
     width: 84.4%;
     background-color: pink;
 
@@ -94,7 +94,9 @@ export default {
     flex-direction: row;
     flex-wrap: wrap;
     #addingAnIceCreamParlor {
-      position: absolute;
+      z-index: 1;
+
+      position: fixed;
       top: 1vw;
       right: 1vw;
     }

@@ -1,10 +1,12 @@
 @media (orientation: portrait) {
   #containerMenu {
+    z-index: 2;
+    
+    width: 100vw;
     height: 12.5vw;
     background-color: #ff9e4f;
-
-    position: relative;
-
+    
+    position: fixed;
     #profile {
       position: absolute;
       top: 1.65vw;
