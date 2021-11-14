@@ -24,6 +24,7 @@ export default{
 
 @media (orientation: landscape) {
   #containerMain {
+    margin-left: 15.6%;
     width: 84.4%;
 
     background-color: pink;
