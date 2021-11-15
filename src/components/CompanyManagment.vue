@@ -74,10 +74,7 @@ export default {
   components: {
     AddingAnIceCreamParlor
   },
-  props: ['user', 'companyManagment'],
-  data: () => ({
-    selection: 1
-  })
+  props: ['user', 'companyManagment']
 }
 </script>
 

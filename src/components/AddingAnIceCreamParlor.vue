@@ -36,6 +36,9 @@
                 label="Nazwa lodziarny"
                 required
               ></v-text-field>
+              <span id="span3">Godziny otwarcia:</span><br>
+              <TimeFrom @time="timeFrom"/>
+              <TimeTo @time="timeTo"/>
             </v-container>
           </v-card-text>
           <MglMap
@@ -88,6 +91,8 @@
 </template>
 
 <script>
+import TimeFrom from './TimeFrom.vue'
+import TimeTo from './TimeTo.vue'
 import Announcement from './Announcement.vue'
 
 import { MglMap, MglMarker } from "vue-mapbox"
@@ -98,6 +103,8 @@ import axios from 'axios'
 export default {
   name: 'AddingAniCeCreamParlor',
   components: {
+    TimeFrom,
+    TimeTo,
     Announcement,
     MglMap,
     MglMarker,
@@ -117,6 +124,7 @@ export default {
       height: 0,
       formData: new FormData(),
       name: null,
+      time: null,
       lat: null,
       lon: null,
       town: null,
@@ -127,7 +135,7 @@ export default {
       communique: {
         symbol: null,
         contents: null
-    }
+      }
     }
   },
   created() {
@@ -141,6 +149,12 @@ export default {
       this.height = 210
       
       this.formData.append('photo', file)
+    },
+    timeFrom(time) {
+      this.formData.append('open', time.hour + ":" + time.minute)
+    },
+    timeTo(time) {
+      this.formData.append('close', time.hour + ":" + time.minute)
     },
     addMarker(map) {
       const lngLat = map.mapboxEvent.lngLat
@@ -246,6 +260,10 @@ export default {
 
 #span2 {
   font-size: 11px;
+}
+
+#span3 {
+  font-size: 18px;
 }
 
 @media (orientation: landscape) {
