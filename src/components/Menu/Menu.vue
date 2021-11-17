@@ -25,7 +25,7 @@
 
         @user="user"
 
-        @companyManagment="companyManagment"
+        @openCompanyManagment="openCompanyManagment"
         :user="userData"/>
       </li>
       <li>
@@ -34,21 +34,21 @@
 
         @hideMenu="menuStatusChange"/>
       </li>
-        <component :is="selectedComponent3" @logOut="logOut"/>
+        <LogOut v-if="selectedComponent3" @logOut="logOut"/>
       <li>
       </li>
     </ul>
-    <center>Robert Klinger i Krzysztof Picur © 2021 prawa zastrzeżone</center>
+    <center>Robert Klinger i Krzysztof Picur © 2021 wszelkie prawa zastrzeżone</center>
   </div>
 </template>
 
 <script>
-import Login from './Login.vue'
-import Registration from './Registration.vue'
+import Login from '../Identification/Login.vue'
+import Registration from '../Identification/Registration.vue'
 
 import CompanyManagmentB from './CompanyManagmentB.vue'
 import FavoriteB from './FavoriteB.vue'
-import LogOut from './LogOut.vue'
+import LogOut from '../Identification/LogOut.vue'
 
 import image from "@/assets/avatar.png"
 
@@ -65,7 +65,7 @@ export default{
     return {
       selectedComponent1: Login,
       selectedComponent2: Registration,
-      selectedComponent3: null,
+      selectedComponent3: false,
       userData: null,
       avatarImage: image,
       avatarSize: 4.15,
@@ -96,7 +96,7 @@ export default{
       this.avatarSize = 13
 
       this.selectedComponent2 = FavoriteB
-      this.selectedComponent3 = LogOut
+      this.selectedComponent3 = true
 
       this.userData = data
       this.$emit('user', data)
@@ -107,7 +107,7 @@ export default{
 
       this.selectedComponent1 = Login
       this.selectedComponent2 = Registration
-      this.selectedComponent3 = null
+      this.selectedComponent3 = false
     },
     menuStatusChange() {
       if (this.menu)
@@ -130,8 +130,8 @@ export default{
         this.$emit('component', component)
       }
     },
-    companyManagment(data) {
-      this.$emit('companyManagment', data)
+    openCompanyManagment() {
+      this.$emit('openCompanyManagment')
     }
   }
 }

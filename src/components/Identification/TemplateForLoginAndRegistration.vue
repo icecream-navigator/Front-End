@@ -76,32 +76,30 @@
     <Announcement
       v-if="whetherToDisplay"
       @close="closeTheMessage"
-      >
-      <template v-slot:content>
-        <template v-if="communique.contents">
-          <font-awesome id="symbol" :icon="['fas', communique.symbol]"/>
-          <span class="content">{{communique.contents}}</span>
-        </template>
-        <v-progress-circular
-          v-else
-          class="content"
-          indeterminate
-          color="green"
-        ></v-progress-circular>
-      </template>
+    >
+      <span v-if="communique.contents">
+        <font-awesome id="symbol" :icon="['fas', communique.symbol]"/>
+        <span class="content">{{communique.contents}}</span>
+      </span>
+      <v-progress-circular
+        v-else
+        class="content"
+        indeterminate
+        color="green"
+      ></v-progress-circular>
     </Announcement>
   </div>
 </template>
 
 <script>
-import Announcement from './Announcement.vue'
+import Announcement from '../Notifications/Announcement.vue'
 
 import GoogleLogin from 'vue-google-login'
 
 import axios from 'axios'
 
 export default {
-  name: 'Dialog',
+  name: 'TemplateForLoginAndRegistration',
   components: {
     Announcement,
     GoogleLogin
@@ -160,8 +158,8 @@ export default {
       })
     },
     closeTheMessage() {
-      this.communique.contents = null
       this.whetherToDisplay = false
+      this.communique.contents = null
     },
     hideMenu() {
       this.$emit('hideMenu')

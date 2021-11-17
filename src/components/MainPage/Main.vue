@@ -9,7 +9,7 @@
         <img id ="logo" alt="logo" src="@/assets/logo.png">
       </div>
     </div>
-    <div id="footer">Robert Klinger i Krzysztof Picur © 2021 prawa zastrzeżone</div>
+    <div id="footer">Robert Klinger i Krzysztof Picur © 2021 wszelkie prawa zastrzeżone</div>
     </div>
 </template>
 

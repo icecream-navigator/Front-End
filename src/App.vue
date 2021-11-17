@@ -4,23 +4,23 @@
       <Menu
         @component="replaceComponent"
         @user="user"
-        @companyManagment="companyManagment"
+        @openCompanyManagment="openCompanyManagment"
       />
       <component
         :is="selectedComponent"
+        ref="form"
         :user="userData"
-        :companyManagment="companyManagmentData"
       />
     </div>
   </v-app>
 </template>
 
 <script>
-import Menu from './components/Menu.vue'
+import Menu from './components/Menu/Menu.vue'
 
-import Main from './components/Main.vue'
-import SearchEngine from './components/SearchEngine.vue'
-import CompanyManagment from './components/CompanyManagment.vue'
+import Main from './components/MainPage/Main.vue'
+import SearchEngine from './components/SearchEngine/SearchEngine.vue'
+import CompanyManagment from './components/CompanyManagment/CompanyManagment.vue'
 
 export default {
   name: 'App',
@@ -44,8 +44,8 @@ export default {
     user(data) {
       this.userData = data
     },
-    companyManagment(data) {
-      this.companyManagmentData = data
+    openCompanyManagment() {
+      this.$refs.form.getData()
     }
   }
 }

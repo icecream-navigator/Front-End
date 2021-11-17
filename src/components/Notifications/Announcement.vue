@@ -7,7 +7,7 @@
     >
       <v-card id="card">
         <div id="content">
-          <slot name="content"/>
+          <slot/>
         </div>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -28,6 +28,7 @@
 
 <script>
 export default {
+  name: 'Announcement',
   data: () => ({
     dialog: true
   }),
@@ -39,20 +40,20 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 #content {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 #containerButton {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 
-    display: flex;
-    justify-content: center;
-}
-#buttonOK {
-  color: white;
+  display: flex;
+  justify-content: center;
+  #buttonOK {
+    color: white;
+  }
 }
 </style>

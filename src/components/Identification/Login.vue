@@ -4,7 +4,7 @@
       @hideMenu="hideMenu"
       @emailAndPassword="sendingData"
       @user="provideUserData"
-      >
+    >
       <template v-slot:buttonInscription>
         ZALOGUJ SIĘ
       </template>
@@ -21,26 +21,24 @@
     <Announcement 
       v-if="whetherToDisplay"
       @close="closeTheMessage"
-      >
-      <template v-slot:content>
-        <template v-if="communique.contents">
-          <font-awesome id="symbol" :icon="['fas', communique.symbol]"/>
-          <span class="content">{{communique.contents}}</span>
-        </template>
-        <v-progress-circular
-          v-else
-          class="content"
-          indeterminate
-          color="green"
-        ></v-progress-circular>
+    >
+      <template v-if="communique.contents">
+        <font-awesome id="symbol" :icon="['fas', communique.symbol]"/>
+        <span class="content">{{communique.contents}}</span>
       </template>
+      <v-progress-circular
+        v-else
+        class="content"
+        indeterminate
+        color="green"
+      ></v-progress-circular> 
     </Announcement>
   </div>
 </template>
 
 <script>
-import Dialog from './Dialog.vue'
-import Announcement from './Announcement.vue'
+import Dialog from './TemplateForLoginAndRegistration.vue'
+import Announcement from '../Notifications/Announcement.vue'
 
 import axios from 'axios'
 
@@ -74,7 +72,7 @@ export default {
       .then(response => {
       if (response)
       {
-        this.provideUserData(response.data);
+        this.provideUserData(response.data)
       }
       })
       .catch(error => {
@@ -100,8 +98,8 @@ export default {
       })
     },
     closeTheMessage() {
-      this.communique.contents = null
       this.whetherToDisplay = false
+      this.communique.contents = null
     },
     provideUserData(data) {
       this.$emit('user', data)

@@ -21,17 +21,21 @@
       flex-direction: column-reverse;
       align-items: center;
       #addImage {
-      margin-top: 10px;
-      position: relative;
+        margin-top: 10px;
+        color: black;
+        position: relative;
+        #span1 {
+          margin-right: 5px;
+        }
         #input {
-          margin-left: 5px;
-          margin-top: 10px;
-          width: 105px;
+          margin-top: 5px;
+          margin-bottom: 20px;
+          width: 95px;
         }
         #span2 {
           position: absolute;
           left: 0;
-          bottom: -15px;
+          bottom: -2px;
         }
       }
       #image {
