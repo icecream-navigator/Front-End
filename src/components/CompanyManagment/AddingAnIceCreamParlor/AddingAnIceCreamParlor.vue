@@ -20,20 +20,20 @@
           >
             <font-awesome :icon="['fas', 'times']"/>
           </button>
-          <v-container id="uploadImage">
-            <div id="addImage">
-              <span id="span1">Dodaj zdjęcie lodziarny:</span>
-              <input id="input" type="file" @change="onFileSelected">
-              <span id="span2">(niewymagane)</span>
-            </div>
-            <img id="image" :style="{'height': height + 'px'}" :src="image">
-          </v-container>
           <v-card-text>
             <v-container>
+              <div id="uploadImage">
+                <div id="addImage">
+                  <span id="span1">Dodaj zdjęcie lodziarni:</span>
+                  <input id="input" type="file" @change="onFileSelected">
+                  <span id="span2">(niewymagane)</span>
+                </div>
+                <img id="image" :style="{'height': height + 'px'}" :src="image">
+              </div>
               <slot name="v-text-field"/>
               <v-text-field
                 v-model="name"
-                label="Nazwa lodziarny"
+                label="Nazwa lodziarni"
                 required
               ></v-text-field>
               <span id="span3">Godziny otwarcia:</span><br>
@@ -73,27 +73,25 @@
     <Announcement
       v-if="whetherToDisplay"
       @close="closeTheMessage"
-      >
-      <template v-slot:content>
-        <template v-if="communique.contents">
-          <font-awesome id="symbol" :icon="['fas', communique.symbol]"/>
-          <span class="content">{{communique.contents}}</span>
-        </template>
-        <v-progress-circular
-          v-else
-          class="content"
-          indeterminate
-          color="green"
-        ></v-progress-circular>
-      </template>
+    >
+      <span v-if="communique.contents">
+        <font-awesome id="symbol" :icon="['fas', communique.symbol]"/>
+        <span class="content">{{communique.contents}}</span>
+      </span>
+      <v-progress-circular
+        v-else
+        class="content"
+        indeterminate
+        color="green"
+      ></v-progress-circular>
     </Announcement>
   </div>
 </template>
 
 <script>
-import TimeFrom from './TimeFrom.vue'
-import TimeTo from './TimeTo.vue'
-import Announcement from './Announcement.vue'
+import TimeFrom from '../../Times/TimeFrom.vue'
+import TimeTo from '../../Times/TimeTo.vue'
+import Announcement from '../../Notifications/Announcement.vue'
 
 import { MglMap, MglMarker } from "vue-mapbox"
 import MglGeocoderControl from 'vue-mapbox-geocoder'
@@ -119,12 +117,10 @@ export default {
       center: [19, 52.25],
       zoom: 4.5,
       coordinates: null,
-      defaultInput: null,
       image: null,
       height: 0,
       formData: new FormData(),
       name: null,
-      time: null,
       lat: null,
       lon: null,
       town: null,
@@ -221,6 +217,7 @@ export default {
         {
           this.communique.symbol = "check-circle"
           this.communique.contents = "Utworzono lodziarne"
+          this.$emit('refresh')
         }
         })
         .catch(error => {
@@ -248,9 +245,9 @@ export default {
       this.formData.delete('place_name')
     },
     closeTheMessage() {
-      this.communique.contents = null
       this.whetherToDisplay = false
-    },
+      this.communique.contents = null
+    }
   }
 }
 </script>
@@ -285,36 +282,26 @@ export default {
     padding-top: 2.2rem !important;
     padding-bottom: 1% !important;
     #uploadImage {
-      padding: 0;
-      padding-left: 48px;
-      padding-right: 48px;
-
       display: flex;
       justify-content: space-between;
       #addImage {
-        margin-top: 50px;
-
         width: 170px;
+        
+        color: black;
         
         display: flex;
         flex-direction: column;
-        position: relative;
-        #span1 {
-          position: absolute;
+        #span1 {  
           bottom: 30px;
         }
         #span2 {
-          position: absolute;
           bottom: -17px;
         }
         #input {
-          position: absolute;
-          bottom: 0;
-
-          margin-top: 10px;
+          margin-top: 5px;
           margin-bottom: auto;
           
-          width: 105px;
+          width: 90px;
         }
       }
     }
@@ -328,13 +315,13 @@ export default {
         right: auto;
       }
     }
-    @media (max-width: 1000px) {
-      #image {
-        height: 25vw !important;
-      }
-      #map {
-        height: 75vh;
-      }
+  }
+  @media (max-width: 1000px) {
+    #image {
+      height: 25vw !important;
+    }
+    #map {
+      height: 75vh;
     }
   }
 }

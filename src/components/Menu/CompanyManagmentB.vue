@@ -3,7 +3,7 @@
     <v-btn
       id="buttonPortait"
       class="button"
-      @click="event(), getData(), hideMenu()"
+      @click="event(), kk(), hideMenu()"
       >
       <b>
         ZARZĄDZANIE
@@ -13,8 +13,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: "CompanyManagmentB",
   props: ['user'],
@@ -22,16 +20,11 @@ export default {
     event() {
       this.$emit('event', 'CompanyManagment')
     },
-    getData() {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${this.user.access_token}`
-        }
-      }
-      axios.get("https://citygame.ga/api/stall/my", config)
-        .then(response => {
-          this.$emit('companyManagment', response.data)
-        })
+    kk() {
+      setTimeout(function () { this.openyCompanyManagment() }.bind(this), 1)
+    },
+    openyCompanyManagment() {
+      this.$emit('openCompanyManagment')
     },
     hideMenu() {
       this.$emit('hideMenu')
