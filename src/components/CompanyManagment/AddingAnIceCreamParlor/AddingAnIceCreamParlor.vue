@@ -83,7 +83,7 @@
         class="content"
         indeterminate
         color="green"
-      ></v-progress-circular> 
+      ></v-progress-circular>
     </Announcement>
   </div>
 </template>
@@ -207,12 +207,12 @@ export default {
 
       axios.post("https://citygame.ga/api/stall/create", this.formData, config)
         .then(response => {
-        if (response)
-        {
-          this.communique.symbol = "check-circle"
-          this.communique.contents = "Utworzono lodziarne"
-          this.$emit('refresh')
-        }
+          if (response)
+          {
+            this.communique.symbol = "check-circle"
+            this.communique.contents = "Utworzono lodziarne"
+            this.$emit('refresh')
+          }
         })
         .catch(error => {
           this.communique.symbol = "times-circle"

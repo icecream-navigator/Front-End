@@ -84,7 +84,10 @@
         </MglMap>
         <v-card-text>
           <v-container>
-            <IceCreamCatalog :iceCreamShop="iceCreamShop"/>
+            <IceCreamCatalog
+            :user="user"
+              :iceCreamShop="iceCreamShop"
+            />
           </v-container>
         </v-card-text>
         <v-card-text>
@@ -115,7 +118,7 @@ export default {
     MglMap,
     MglMarker
   },
-  props: ['iceCreamShop'],
+  props: ['user', 'iceCreamShop'],
   data() {
     return {
       dialog: false,

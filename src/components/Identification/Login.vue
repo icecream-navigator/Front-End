@@ -87,16 +87,16 @@ export default {
 
       axios.post("https://citygame.ga/api/auth/login", this.login)
       .then(response => {
-      if (response)
-      {
-        this.provideUserData(response.data)
-        
-        if (this.rememberMe)
+        if (response)
         {
-          Cookies.set('email', email)
-          Cookies.set('password', password)
+          this.provideUserData(response.data)
+          
+          if (this.rememberMe)
+          {
+            Cookies.set('email', email)
+            Cookies.set('password', password)
+          }
         }
-      }
       })
       .catch(error => {
         this.communique.symbol = "times-circle"

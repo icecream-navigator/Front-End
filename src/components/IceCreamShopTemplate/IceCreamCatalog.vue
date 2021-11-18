@@ -9,25 +9,33 @@
       Katolog lodów
     </v-btn>
     <div v-if="display" id="ice-cream">
-      <span v-for="ice in iceCream" :key="ice.id">
-        <div id="ice">
-          <b>{{ice.flavour}}</b><br>
-          {{ice.type}}<br>
-          {{ice.form}}<br>
-          Cena: {{ice.price}} zł<br>
-          Ilość: {{ice.quantity}}<br>
-        </div>
-      </span>
+      <div v-for="ice in iceCream" :key="ice.id" id="ice">
+        <b>{{ice.flavour}}</b><br>
+        {{ice.type}}<br>
+        {{ice.form}}<br>
+        Cena: {{ice.price}} zł<br>
+        Ilość: {{ice.quantity}}<br>
+      </div>
+      <AddIce
+        :user="user"
+        :IceCreamShop="iceCreamShop"
+        @refresh="getDataIce"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import AddIce from '../CompanyManagment/ModifitedIceCreamShop/AddIce.vue'
+
 import axios from 'axios'
 
 export default {
   name: 'IceCreamCatalog',
-  props: ['iceCreamShop'],
+  components: {
+    AddIce
+  },
+  props: ['user', 'iceCreamShop'],
   data() {
     return {
       display: false,

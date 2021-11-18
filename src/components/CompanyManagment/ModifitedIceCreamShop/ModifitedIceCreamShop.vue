@@ -1,6 +1,9 @@
 <template>
   <div>
-    <IceCreamShop :iceCreamShop="iceCreamShop">
+    <IceCreamShop 
+      :user="user"
+      :iceCreamShop="iceCreamShop"
+    >
       <template v-slot:owner>
         <div class="update">
           <v-btn
