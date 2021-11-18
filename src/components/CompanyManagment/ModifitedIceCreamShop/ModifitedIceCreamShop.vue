@@ -2,20 +2,19 @@
   <div>
     <IceCreamShop :iceCreamShop="iceCreamShop">
       <template v-slot:owner>
-        <v-btn
-          class="update"
-          id="trash"
-          @click="confirmationNotification"
-        >
-          <font-awesome :icon="['fas', 'trash']"/>
-        </v-btn>
-        <v-btn
-          class="update"
-          id="edit"
-          @click="confirmationNotification"
-        >
-          <font-awesome :icon="['fas', 'edit']"/>
-        </v-btn>
+        <div class="update">
+          <v-btn
+            id="trash"
+            @click="confirmationNotification"
+          >
+            <font-awesome :icon="['fas', 'trash']"/>
+          </v-btn>
+          <UpdateIceCreamShop
+            :user="user"
+            :iceCreamShop="iceCreamShop"
+            @refresh="refresh"
+          />
+        </div>
       </template>
     </IceCreamShop>
     <ConfirmationNotification
@@ -31,13 +30,15 @@
 <script>
 import IceCreamShop from '../../IceCreamShopTemplate/IceCreamShop.vue'
 import ConfirmationNotification from '../../Notifications/ConfirmationNotification.vue'
+import UpdateIceCreamShop from './UpdateIceCreamShop.vue'
 
 export default {
   name: 'ModifitedIceCreamShop',
-  props: ['iceCreamShop'],
+  props: ['user', 'iceCreamShop'],
   components: {
     IceCreamShop,
-    ConfirmationNotification
+    ConfirmationNotification,
+    UpdateIceCreamShop
   },
   data() {
     return {
@@ -66,8 +67,8 @@ export default {
     delet() {
       this.$emit('delet', this.iceCreamShop.id)
     },
-    update() {
-      
+    refresh() {
+      this.$emit('refresh')
     }
   }
 }
@@ -75,16 +76,13 @@ export default {
 
 <style>
 .update {
-  margin-top: -3.2rem;
-  width: 50px;
+  margin-top: -2.25rem;
   font-size: 18px !important;
-  border-radius: 0px;
+
+  display: flex;
 }
 #trash {
+  border-radius: 0px;
   background-color: crimson !important;
-}
-#edit {
-  background-color: darkorchid !important;
-  border-end-end-radius: 10px;
 }
 </style>

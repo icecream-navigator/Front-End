@@ -59,8 +59,10 @@
 
         <v-card-actions>
          <ModifitedIceCreamShop
+          :user="user"
           :iceCreamShop="iceCreamShop"
           @delet="deleteIceCreamShop"
+          @refresh="getData"
         />
         </v-card-actions>
       </div>

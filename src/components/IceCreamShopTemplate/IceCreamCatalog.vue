@@ -46,7 +46,7 @@ export default {
       }
     },
     getDataIce() {
-      axios.get("https://citygame.ga/api/stall/show/1")
+      axios.get("https://citygame.ga/api/stall/show/" + this.iceCreamShop.id)
         .then(response =>
         {
           this.iceCream = response.data[0].icecreams
@@ -65,15 +65,15 @@ export default {
   height: 40px;
 
   color: white;
-
+  
   background-color: #505050;
+  
   border-style: double;
 
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 #ice-cream {
   padding-top: 25px;
   padding-left: 15px;

@@ -1,13 +1,12 @@
 <template>
   <div>
+    <v-btn
+     id="edit"
+      @click="dialog = true"
+    >
+      <font-awesome :icon="['fas', 'edit']"/>
+    </v-btn>
     <v-row justify="center">
-      <v-btn
-        id="button"
-        x-large
-        @click="dialog = true"
-      >
-        <b>+</b>
-      </v-btn>
       <v-dialog
         v-model="dialog"
         persistent
@@ -28,7 +27,7 @@
                   <input id="input" type="file" @change="onFileSelected">
                   <span id="span2">(niewymagane)</span>
                 </div>
-                <img id="image" :style="{'height': height + 'px'}" :src="image">
+                <img id="image" style="height: 210px" :src="image">
               </div>
               <slot name="v-text-field"/>
               <v-text-field
@@ -64,7 +63,7 @@
               color="blue darken-1"
               @click="sendingData"
             >
-              STWÓRZ
+              ZAPISZ ZMIANY
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -99,7 +98,7 @@ import MglGeocoderControl from 'vue-mapbox-geocoder'
 import axios from 'axios'
 
 export default {
-  name: 'AddingAniCeCreamParlor',
+  name: 'UpdateIceCreamShop',
   components: {
     TimeFrom,
     TimeTo,
@@ -108,7 +107,7 @@ export default {
     MglMarker,
     MglGeocoderControl
   },
-  props: ['user'],
+  props: ['user', 'iceCreamShop'],
   data() {
     return {
       dialog: false,
@@ -118,7 +117,6 @@ export default {
       zoom: 4.5,
       coordinates: null,
       image: null,
-      height: 0,
       formData: new FormData(),
       name: null,
       whetherToDisplay: false,
@@ -131,12 +129,15 @@ export default {
   created() {
     this.map = null
   },
+  mounted() {
+    this.image = this.iceCreamShop.photo_url
+    this.name = this.iceCreamShop.name
+    this.coordinates = [this.iceCreamShop.lon, this.iceCreamShop.lat]
+  },
   methods: {
     onFileSelected(event) {
       const file = event.target.files[0]
       this.image = URL.createObjectURL(file)
-
-      this.height = 210
       
       this.formData.append('photo', file)
     },
@@ -205,12 +206,12 @@ export default {
 
       this.whetherToDisplay = true
 
-      axios.post("https://citygame.ga/api/stall/create", this.formData, config)
+      axios.post("https://citygame.ga/api/stall/update/" + this.iceCreamShop.id, this.formData, config)
         .then(response => {
         if (response)
         {
           this.communique.symbol = "check-circle"
-          this.communique.contents = "Utworzono lodziarne"
+          this.communique.contents = "Zaaktualizowano lodziarnie"
           this.$emit('refresh')
         }
         })
@@ -223,16 +224,7 @@ export default {
           }
           else 
           {
-            const status = error.response.status
-
-            if (status == 422)
-            {
-              this.communique.contents = "Uzupełnij dane"
-            }
-            else
-            {
-              this.communique.contents = error
-            }
+            this.communique.contents = error
           }
         })
 
@@ -247,7 +239,13 @@ export default {
 </script>
 
 <style lang="scss">
-@import './AddingAnIceCreamParlorP.scss';
+@import '../AddingAnIceCreamParlor/AddingAnIceCreamParlorP.scss';
+
+#edit {
+  background-color: darkorchid !important;
+  border-radius: 0;
+  border-end-end-radius: 10px;
+}
 
 #span2 {
   font-size: 11px;
