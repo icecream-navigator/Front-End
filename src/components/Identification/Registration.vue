@@ -88,11 +88,11 @@ export default {
 
       axios.post("https://citygame.ga/api/auth/register", this.registration)
       .then(response => {
-      if (response)
-      {
-        this.communique.symbol = "check-circle"
-        this.communique.contents = "Utworzono konto"
-      }
+        if (response)
+        {
+          this.communique.symbol = "check-circle"
+          this.communique.contents = "Utworzono konto"
+        }
       })
       .catch(error => {
         this.communique.symbol = "times-circle"
