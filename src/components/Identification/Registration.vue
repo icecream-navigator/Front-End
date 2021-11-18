@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Dialog 
+    <TemplateForLoginAndRegistration 
       @hideMenu="hideMenu" 
       @emailAndPassword="sendingData"
       >
@@ -32,7 +32,7 @@
       <template v-slot:action>
         zarejestruj się
       </template>
-    </Dialog>
+    </TemplateForLoginAndRegistration>
     <Announcement 
       v-if="whetherToDisplay"
       @close="closeTheMessage"
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import Dialog from './TemplateForLoginAndRegistration.vue'
+import TemplateForLoginAndRegistration from './TemplateForLoginAndRegistration.vue'
 import Announcement from '../Notifications/Announcement.vue'
 
 import axios from 'axios'
@@ -60,7 +60,7 @@ import axios from 'axios'
 export default {
   name: 'Registration',
   components: {
-    Dialog,
+    TemplateForLoginAndRegistration,
     Announcement
   },
   data() {

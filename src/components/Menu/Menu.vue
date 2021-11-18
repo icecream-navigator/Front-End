@@ -34,7 +34,11 @@
 
         @hideMenu="menuStatusChange"/>
       </li>
-        <LogOut v-if="selectedComponent3" @logOut="logOut"/>
+        <LogOut
+          v-if="selectedComponent3"
+          @event="event"
+          @logOut="logOut"
+        />
       <li>
       </li>
     </ul>
@@ -49,6 +53,8 @@ import Registration from '../Identification/Registration.vue'
 import CompanyManagmentB from './CompanyManagmentB.vue'
 import FavoriteB from './FavoriteB.vue'
 import LogOut from '../Identification/LogOut.vue'
+
+import Cookies from 'js-cookie'
 
 import image from "@/assets/avatar.png"
 
@@ -102,6 +108,14 @@ export default{
       this.$emit('user', data)
     },
     logOut() {
+      Cookies.remove('email')
+      Cookies.remove('password')
+
+      Cookies.remove('_token')
+      Cookies.remove('_provider')
+
+      this.$emit('user', null)
+
       this.avatarImage = image
       this.avatarSize = 4.15
 
