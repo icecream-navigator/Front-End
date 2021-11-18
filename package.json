@@ -15,6 +15,7 @@
     "@mapbox/mapbox-gl-geocoder": "^4.7.4",
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
+    "js-cookie": "^3.0.1",
     "mapbox-gl": "^0.53.1",
     "vue": "^2.6.11",
     "vue-axios": "^3.3.7",

@@ -1,6 +1,7 @@
 <template>
   <div>
-    <Dialog
+    <TemplateForLoginAndRegistration
+      :rememberMe="rememberMe"
       @hideMenu="hideMenu"
       @emailAndPassword="sendingData"
       @user="provideUserData"
@@ -10,6 +11,7 @@
       </template>
       <template v-slot:checkBox>
         <v-checkbox
+          v-model="rememberMe"
           label="Zapamiętaj mnie"
           hide-details
         ></v-checkbox>
@@ -17,7 +19,7 @@
       <template v-slot:action>
         zaloguj się
       </template>
-    </Dialog>
+    </TemplateForLoginAndRegistration>
     <Announcement 
       v-if="whetherToDisplay"
       @close="closeTheMessage"
@@ -37,15 +39,17 @@
 </template>
 
 <script>
-import Dialog from './TemplateForLoginAndRegistration.vue'
+import TemplateForLoginAndRegistration from './TemplateForLoginAndRegistration.vue'
 import Announcement from '../Notifications/Announcement.vue'
+
+import Cookies from 'js-cookie'
 
 import axios from 'axios'
 
 export default {
   name: 'Login',
   components: {
-    Dialog,
+    TemplateForLoginAndRegistration,
     Announcement
   },
   data() {
@@ -54,11 +58,24 @@ export default {
         email: null,
         password: null
       },
+      rememberMe: false,
       whetherToDisplay: false,
       communique: {
         symbol: null,
         contents: null
       }
+    }
+  },
+  mounted() {
+    if (Cookies.get('email'))
+    {
+      this.login.email = Cookies.get('email')
+      this.login.password = Cookies.get('password')
+
+      axios.post("https://citygame.ga/api/auth/login", this.login)
+        .then(response => {
+          this.provideUserData(response.data)
+        })
     }
   },
   methods: {
@@ -73,6 +90,12 @@ export default {
       if (response)
       {
         this.provideUserData(response.data)
+        
+        if (this.rememberMe)
+        {
+          Cookies.set('email', email)
+          Cookies.set('password', password)
+        }
       }
       })
       .catch(error => {

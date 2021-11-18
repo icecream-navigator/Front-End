@@ -73,20 +73,20 @@
         </v-card>
       </v-dialog>
     </v-row>
-    <Announcement
+    <Announcement 
       v-if="whetherToDisplay"
       @close="closeTheMessage"
     >
-      <span v-if="communique.contents">
+      <template v-if="communique.contents">
         <font-awesome id="symbol" :icon="['fas', communique.symbol]"/>
         <span class="content">{{communique.contents}}</span>
-      </span>
+      </template>
       <v-progress-circular
         v-else
         class="content"
         indeterminate
         color="green"
-      ></v-progress-circular>
+      ></v-progress-circular> 
     </Announcement>
   </div>
 </template>
@@ -96,6 +96,7 @@ import Announcement from '../Notifications/Announcement.vue'
 
 import GoogleLogin from 'vue-google-login'
 
+import Cookies from 'js-cookie'
 import axios from 'axios'
 
 export default {
@@ -104,6 +105,7 @@ export default {
     Announcement,
     GoogleLogin
   },
+  props: ['rememberMe'],
   data: () => ({
     dialog: false,
     email: null,
@@ -111,7 +113,7 @@ export default {
     params: {
       client_id: process.env.VUE_APP_CLIENT_ID
     },
-    social: {
+    socialUser: {
       _token: null,
       _provider: null
     },
@@ -121,41 +123,59 @@ export default {
       contents: null
     }
   }),
+  mounted() {
+    if (Cookies.get('_token'))
+    {
+      this.socialUser._token = Cookies.get('_token')
+      this.socialUser._provider = Cookies.get('_provider')
+
+      axios.post('https://citygame.ga/api/provider/callback', this.socialUser)
+        .then(response => {
+          this.$emit('user', response.data)
+        })
+    }
+  },
   methods: {
     provideTheData() {
       this.$emit('emailAndPassword', this.email, this.password)
     },
     getTokenGoogle(googleUser) {
-      this.social._token = googleUser.Zb.access_token
-      this.social._provider = 'google'
+      this.socialUser._token = googleUser.wc.access_token
+      this.socialUser._provider = 'google'
 
       this.sendingToken()
     },
     sendingToken() {
       this.whetherToDisplay = true
 
-      axios.post('https://citygame.ga/api/provider/callback', this.social)
-      .then(response => {
-      if (response)
-      {
-        this.communique.symbol = "check-circle"
-        this.communique.contents = "Akcja się powiodła"
-
-        this.$emit('user', response.data)
-      }
-      })
-      .catch(error => {
-        this.communique.symbol = "times-circle"
-
-        if (!error.response)
+      axios.post('https://citygame.ga/api/provider/callback', this.socialUser)
+        .then(response => {
+        if (response)
         {
-          this.communique.contents = "Brak połączenia, spróbuj ponownie później"
+          this.communique.symbol = "check-circle"
+          this.communique.contents = "Akcja się powiodła"
+
+          this.$emit('user', response.data)
+
+          if (this.rememberMe)
+          {
+            Cookies.set('_token', this.socialUser._token)
+            Cookies.set('_provider', this.socialUser._provider)
+          }
         }
-        else 
-        {
-          this.communique.contents = "Akcja się NIE powiodła"
-        }
-      })
+        })
+        .catch(error => {
+          this.communique.symbol = "times-circle"
+
+          if (!error.response)
+          {
+            this.communique.contents = "Brak połączenia, spróbuj ponownie później"
+          }
+          else 
+          {
+            this.communique.contents = "Akcja się NIE powiodła"
+          }
+        })
     },
     closeTheMessage() {
       this.whetherToDisplay = false

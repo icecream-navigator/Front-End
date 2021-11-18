@@ -17,7 +17,8 @@ export default {
   name: "LogOut",
   methods: {
     logOut() {
-      this.$emit('logOut');
+      this.$emit('event', 'Main')
+      this.$emit('logOut')
     },
     hideMenu() {
       this.$emit('hideMenu')
