@@ -36,8 +36,14 @@
                 required
               ></v-text-field>
               <span id="span3">Godziny otwarcia:</span><br>
-              <TimeFrom @time="timeFrom"/>
-              <TimeTo @time="timeTo"/>
+              <TimeFromEdit
+                :time="timeOpen"
+                @time="timeFrom"
+              />
+              <TimeToEdit
+                :time="timeClose"
+                @time="timeTo"
+              />
             </v-container>
           </v-card-text>
           <MglMap
@@ -88,8 +94,8 @@
 </template>
 
 <script>
-import TimeFrom from '../../Times/TimeFrom.vue'
-import TimeTo from '../../Times/TimeTo.vue'
+import TimeFromEdit from './TimeFromEdit.vue'
+import TimeToEdit from './TimeToEdit.vue'
 import Announcement from '../../Notifications/Announcement.vue'
 
 import { MglMap, MglMarker } from "vue-mapbox"
@@ -100,8 +106,8 @@ import axios from 'axios'
 export default {
   name: 'UpdateIceCreamShop',
   components: {
-    TimeFrom,
-    TimeTo,
+    TimeFromEdit,
+    TimeToEdit,
     Announcement,
     MglMap,
     MglMarker,
@@ -119,6 +125,14 @@ export default {
       image: null,
       formData: new FormData(),
       name: null,
+      timeOpen: {
+        hour: this.iceCreamShop.open.substring(0, 2),
+        minute: this.iceCreamShop.open.substring(3, 5)
+      },
+      timeClose: {
+        hour: this.iceCreamShop.close.substring(0, 2),
+        minute: this.iceCreamShop.close.substring(3, 5)
+      },
       whetherToDisplay: false,
       communique: {
         symbol: null,

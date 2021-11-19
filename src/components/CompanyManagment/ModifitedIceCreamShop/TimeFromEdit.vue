@@ -1,5 +1,6 @@
 <template>
   <div>
+    <slot/>
     <div class="time">
       <slot name="content"/>&nbsp;
       <div class="area">{{time.hour}}</div>
@@ -20,14 +21,7 @@
 <script>
 export default {
   name: 'Time',
-  data() {
-    return {
-      time: {
-        hour: null,
-        minute: null
-      }
-    }
-  },
+  props: ['time'],
   methods: {
     addAnHour() {
       this.time.hour++
