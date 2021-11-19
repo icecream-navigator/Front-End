@@ -86,31 +86,5 @@ export default {
 
 
 <style lang="scss">
-.time {
-  margin-bottom: 5px;
-  height: 22px;
-
-  font-size: 16px;
-
-  display: flex;
-  flex-direction: row;
-  .area {
-    width: 20px;
-    height: 20px;
-    background-color: white;
-
-    text-align: center;
-  }
-  .buttons {
-    margin-top: -5px;
-    .button {  
-      height: 10px;
-      font-size: 8px;
-    }
-    .button:hover {  
-      color: #2eb0fb;
-      cursor: pointer;
-    }
-  }
-}
+@import './Time.scss';
 </style>

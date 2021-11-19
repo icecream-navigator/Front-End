@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn
-     id="edit"
+      id="edit"
       @click="dialog = true"
     >
       <font-awesome :icon="['fas', 'edit']"/>
@@ -36,11 +36,11 @@
                 required
               ></v-text-field>
               <span id="span3">Godziny otwarcia:</span><br>
-              <TimeFromEdit
+              <TimeFromUpdate
                 :time="timeOpen"
                 @time="timeFrom"
               />
-              <TimeToEdit
+              <TimeToUpdate
                 :time="timeClose"
                 @time="timeTo"
               />
@@ -94,8 +94,8 @@
 </template>
 
 <script>
-import TimeFromEdit from './TimeFromEdit.vue'
-import TimeToEdit from './TimeToEdit.vue'
+import TimeFromUpdate from './TimeUpdate/TimeFromUpdate.vue'
+import TimeToUpdate from './TimeUpdate/TimeToUpdate.vue'
 import Announcement from '../../Notifications/Announcement.vue'
 
 import { MglMap, MglMarker } from "vue-mapbox"
@@ -106,8 +106,8 @@ import axios from 'axios'
 export default {
   name: 'UpdateIceCreamShop',
   components: {
-    TimeFromEdit,
-    TimeToEdit,
+    TimeFromUpdate,
+    TimeToUpdate,
     Announcement,
     MglMap,
     MglMarker,
@@ -257,8 +257,7 @@ export default {
 
 #edit {
   background-color: darkorchid !important;
-  border-radius: 0;
-  border-end-end-radius: 10px;
+  border-radius: 0 0 10px 0;
 }
 
 #span2 {

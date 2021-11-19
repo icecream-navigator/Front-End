@@ -85,7 +85,8 @@
         <v-card-text>
           <v-container>
             <IceCreamCatalog
-            :user="user"
+              :orTheOwner="orTheOwner"
+              :user="user"
               :iceCreamShop="iceCreamShop"
             />
           </v-container>
@@ -118,7 +119,7 @@ export default {
     MglMap,
     MglMarker
   },
-  props: ['user', 'iceCreamShop'],
+  props: ['orTheOwner', 'user', 'iceCreamShop'],
   data() {
     return {
       dialog: false,
@@ -145,7 +146,7 @@ export default {
         })
     },
     commentsInterval() {
-      setInterval(()=>{
+      setInterval(() => {
         axios.get("https://citygame.ga/api/stall/show/" + this.iceCreamShop.id + "/opinions")
           .then(response =>
           {

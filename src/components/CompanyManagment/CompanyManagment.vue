@@ -100,6 +100,9 @@ export default {
         {
           this.companyManagment = response.data
         })
+        .catch(
+          
+        )
     },
     deleteIceCreamShop(id) {
       axios.delete("https://citygame.ga/api/stall/delete/" + id, this.config)
