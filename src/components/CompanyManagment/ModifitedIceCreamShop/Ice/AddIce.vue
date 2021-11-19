@@ -46,8 +46,8 @@ export default {
         .then(response => {
           if (response)
           {
-            this.clear()
             this.$emit('refresh')
+            this.clear()
           }
         })
     },
@@ -67,23 +67,23 @@ export default {
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 25px;
-
+  
   padding: 10px;
-
+  
   width: 120px;
   height: 150px;
-
+  
   border-radius: 10px;
   background-color: #606060;
   .input {
     height: 20px;
     width: 100px;
-
+  
     background: white;
   }
   #buttonAdd {
     margin-left: 40px;
-
+  
     height: 20px;
     width: 60px;
   }

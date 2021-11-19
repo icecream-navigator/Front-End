@@ -15,8 +15,24 @@
         {{ice.form}}<br>
         Cena: {{ice.price}} zł<br>
         Ilość: {{ice.quantity}}<br>
+        <div
+          v-if="orTheOwner"
+          id="buttons"
+        >
+          <DeleteIce
+            :user="user"
+            :idIce="ice.id"
+            @refresh="getDataIce"
+          />
+          <UpdateIce
+            :user="user"
+            :ice="ice"
+            @refresh="getDataIce"
+          />
+        </div>
       </div>
       <AddIce
+        v-if="orTheOwner"
         :user="user"
         :IceCreamShop="iceCreamShop"
         @refresh="getDataIce"
@@ -26,16 +42,20 @@
 </template>
 
 <script>
-import AddIce from '../CompanyManagment/ModifitedIceCreamShop/AddIce.vue'
+import AddIce from '../CompanyManagment/ModifitedIceCreamShop/Ice/AddIce.vue'
+import DeleteIce from '../CompanyManagment/ModifitedIceCreamShop/Ice/DeleteIce.vue'
+import UpdateIce from '../CompanyManagment/ModifitedIceCreamShop/Ice/UpdateIce.vue'
 
 import axios from 'axios'
 
 export default {
   name: 'IceCreamCatalog',
   components: {
-    AddIce
+    AddIce,
+    DeleteIce,
+    UpdateIce
   },
-  props: ['user', 'iceCreamShop'],
+  props: ['orTheOwner', 'user', 'iceCreamShop'],
   data() {
     return {
       display: false,
@@ -105,6 +125,9 @@ export default {
 
     border-radius: 10px;
     background-color: #606060;
+    #buttons {
+      display: flex;
+    }
   }
 }
 </style>
