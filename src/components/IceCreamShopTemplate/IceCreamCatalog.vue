@@ -4,12 +4,16 @@
       id="iceCreamCatalog"
       elevation="2"
       small
-      @click="showTheIceCream(), getDataIce()"
+      @click="getDataIce(), showTheIceCream()"
     >
       Katolog lodów
     </v-btn>
     <div v-if="display" id="ice-cream">
       <div v-for="ice in iceCream" :key="ice.id" id="ice">
+        <div id="like">
+          <font-awesome id="icon" :icon="['fas', 'star']"/>
+          {{ice.votes}}
+        </div>
         <b>{{ice.flavour}}</b><br>
         {{ice.type}}<br>
         {{ice.form}}<br>
@@ -30,6 +34,11 @@
             @refresh="getDataIce"
           />
         </div>
+        <Like
+          v-if="orTheOwner == null"
+          :user="user"
+          :idIce="ice.id"
+        />
       </div>
       <AddIce
         v-if="orTheOwner"
@@ -45,6 +54,7 @@
 import AddIce from '../CompanyManagment/ModifitedIceCreamShop/Ice/AddIce.vue'
 import DeleteIce from '../CompanyManagment/ModifitedIceCreamShop/Ice/DeleteIce.vue'
 import UpdateIce from '../CompanyManagment/ModifitedIceCreamShop/Ice/UpdateIce.vue'
+import Like from '../RegularUserView/Like.vue'
 
 import axios from 'axios'
 
@@ -53,7 +63,8 @@ export default {
   components: {
     AddIce,
     DeleteIce,
-    UpdateIce
+    UpdateIce,
+    Like
   },
   props: ['orTheOwner', 'user', 'iceCreamShop'],
   data() {
@@ -83,7 +94,6 @@ export default {
   }
 }
 </script>
-
 
 <style lang="scss">
 #iceCreamCatalog {
@@ -125,6 +135,26 @@ export default {
 
     border-radius: 10px;
     background-color: #606060;
+
+    position: relative;
+    #like {
+      position: absolute;
+      top: 0;
+      right: 0;
+
+      width: 50%;
+      height: 12.5px;
+
+      font-size: 10px;
+
+      background-color: blueviolet;
+
+      display: flex;
+      align-items: center;
+      #icon {
+        margin-right: 4px;
+      }
+    }
     #buttons {
       display: flex;
     }

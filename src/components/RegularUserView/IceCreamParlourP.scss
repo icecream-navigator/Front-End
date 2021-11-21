@@ -1,0 +1,20 @@
+@media (orientation: portrait) {
+  #containerCommentAndRating {
+    font-size: 2.5vw;
+    #opinion {
+      width: calc(100% - 12vw) !important;
+      line-height: 125%;
+    }
+    #box {
+      width: 10vw !important;
+      .v-icon.v-icon {
+        font-size: 2vw !important;
+      }
+      #buttonAdd {
+        width: 7vw;
+        height: 5vw;
+        min-width: 0;
+      }
+    }
+  }
+}

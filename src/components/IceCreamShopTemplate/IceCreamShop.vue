@@ -21,6 +21,7 @@
           <font-awesome :icon="['fas', 'times']"/>
         </button>
         <slot name="owner"/>
+        <slot name="user"/>
         <v-card-text>
           <v-container>
             <div id="boxTop">
@@ -93,9 +94,10 @@
         </v-card-text>
         <v-card-text>
           <v-container>
-            <span v-for="opinion in opinions" :key="opinion.id">
+            <div v-for="opinion in opinions" :key="opinion.id">
               <Comment :opinion="opinion"/>
-            </span>
+            </div>
+            <slot name="addingACommentAndRating"/>
           </v-container>
         </v-card-text>
       </v-card>
