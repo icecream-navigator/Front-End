@@ -4,12 +4,14 @@
       <Menu
         @component="replaceComponent"
         @user="user"
-        @openCompanyManagment="openCompanyManagment"
+        @open="open"
+        ref="refresh"
       />
       <component
         :is="selectedComponent"
-        ref="form"
+        ref="open"
         :user="userData"
+        @refresh="refresh"
       />
     </div>
   </v-app>
@@ -21,6 +23,7 @@ import Menu from './components/Menu/Menu.vue'
 import Main from './components/MainPage/Main.vue'
 import SearchEngine from './components/SearchEngine/SearchEngine.vue'
 import CompanyManagment from './components/CompanyManagment/CompanyManagment.vue'
+import Favorites from './components/Favorites/Favorites.vue'
 
 export default {
   name: 'App',
@@ -28,13 +31,13 @@ export default {
     Menu,
     Main,
     SearchEngine,
-    CompanyManagment
+    CompanyManagment,
+    Favorites
   },
   data() {
     return {
       selectedComponent: Main,
-      userData: null,
-      companyManagmentData: null
+      userData: null
     }
   },
   methods: {
@@ -44,8 +47,11 @@ export default {
     user(data) {
       this.userData = data
     },
-    openCompanyManagment() {
-      this.$refs.form.getData()
+    open() {
+      this.$refs.open.getData()
+    },
+    refresh() {
+      this.$refs.refresh.refresh()
     }
   }
 }

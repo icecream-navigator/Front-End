@@ -3,7 +3,7 @@
     <v-btn
       id="buttonPortait"
       class="button"
-      @click="event(), openCompanyManagment(), hideMenu()"
+      @click="event(), open(), hideMenu()"
       >
       <b>
         ZARZĄDZANIE
@@ -19,9 +19,9 @@ export default {
     event() {
       this.$emit('event', 'CompanyManagment')
     },
-    openCompanyManagment() {
+    open() {
       setTimeout(() => {
-        this.$emit('openCompanyManagment')
+        this.$emit('open')
       }, 1)
     },
     hideMenu() {

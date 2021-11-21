@@ -19,27 +19,26 @@
         </v-btn>
       </li>
       <li>
-        <component :is="selectedComponent1"
-        @event="event"
-        @hideMenu="menuStatusChange"
+        <component
+          :is="selectedComponent1"
+          :user="userData"
+          @user="user"
 
-        @user="user"
+          @event="event"
+          @hideMenu="menuStatusChange"
 
-        @openCompanyManagment="openCompanyManagment"
-        :user="userData"/>
+          @open="open"
+          ref="refresh"
+        />
       </li>
       <li>
-        <component :is="selectedComponent2"
-        @event="event"
-
-        @hideMenu="menuStatusChange"/>
-      </li>
-        <LogOut
-          v-if="selectedComponent3"
+        <component
+          :is="selectedComponent2"
           @event="event"
+          @hideMenu="menuStatusChange"
+
           @logOut="logOut"
         />
-      <li>
       </li>
     </ul>
     <center>Robert Klinger i Krzysztof Picur © 2021 wszelkie prawa zastrzeżone</center>
@@ -51,7 +50,7 @@ import Login from '../Identification/Login.vue'
 import Registration from '../Identification/Registration.vue'
 
 import CompanyManagmentB from './CompanyManagmentB.vue'
-import FavoriteB from './FavoriteB.vue'
+import FavoritesB from './FavoritesB.vue'
 import LogOut from '../Identification/LogOut.vue'
 
 import Cookies from 'js-cookie'
@@ -64,14 +63,13 @@ export default{
     Login,
     Registration,
     CompanyManagmentB,
-    FavoriteB,
+    FavoritesB,
     LogOut
   },
   data() {
     return {
       selectedComponent1: Login,
       selectedComponent2: Registration,
-      selectedComponent3: false,
       userData: null,
       avatarImage: image,
       avatarSize: 4.15,
@@ -95,14 +93,13 @@ export default{
         }
         else
         {
-          this.selectedComponent1 = null
+          this.selectedComponent1 = FavoritesB
         }
       }
 
       this.avatarSize = 13
 
-      this.selectedComponent2 = FavoriteB
-      this.selectedComponent3 = true
+      this.selectedComponent2 = LogOut
 
       this.userData = data
       this.$emit('user', data)
@@ -121,7 +118,6 @@ export default{
 
       this.selectedComponent1 = Login
       this.selectedComponent2 = Registration
-      this.selectedComponent3 = false
     },
     menuStatusChange() {
       if (this.menu)
@@ -139,13 +135,16 @@ export default{
       this.$emit('component', 'SearchEngine')
     },
     event(component) {
-      if (this.selectedComponent2 == FavoriteB)
+      if (this.selectedComponent2 == LogOut)
       {
         this.$emit('component', component)
       }
     },
-    openCompanyManagment() {
-      this.$emit('openCompanyManagment')
+    open() {
+      this.$emit('open')
+    },
+    refresh() {
+      this.$refs.refresh.refresh()
     }
   }
 }

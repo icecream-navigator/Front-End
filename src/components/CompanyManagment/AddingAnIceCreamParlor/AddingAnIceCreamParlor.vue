@@ -198,8 +198,7 @@ export default {
 
       const config = {
         headers: { 
-          'Authorization': `Bearer ${this.user.access_token}`,
-          'Content-Type': 'multipart/form-data'
+          Authorization: `Bearer ${this.user.access_token}`
         }
       }
 

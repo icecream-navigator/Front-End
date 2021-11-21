@@ -58,12 +58,12 @@
         <v-divider class="mx-4"></v-divider>
 
         <v-card-actions>
-         <ModifitedIceCreamShop
-          :user="user"
-          :iceCreamShop="iceCreamShop"
-          @delet="deleteIceCreamShop"
-          @refresh="getData"
-        />
+          <ModifitedIceCreamShop
+            :user="user"
+            :iceCreamShop="iceCreamShop"
+            @delet="deleteIceCreamShop"
+            @refresh="getData"
+          />
         </v-card-actions>
       </div>
     </v-card>
@@ -100,9 +100,6 @@ export default {
         {
           this.companyManagment = response.data
         })
-        .catch(
-          
-        )
     },
     deleteIceCreamShop(id) {
       axios.delete("https://citygame.ga/api/stall/delete/" + id, this.config)
