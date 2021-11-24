@@ -50,7 +50,7 @@ export default {
         }
       }
 
-      axios.post("https://citygame.ga/api/icecream/vote/" + this.idIce, config)
+      axios.post("https://citygame.ga/api/icecream/vote/" + this.idIce, null, config)
         .then(response => {
           if (response)
           {

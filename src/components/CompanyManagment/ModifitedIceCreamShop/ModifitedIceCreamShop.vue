@@ -1,7 +1,6 @@
 <template>
   <div>
     <IceCreamShop
-      :orTheOwner="orTheOwner"
       :user="user"
       :iceCreamShop="iceCreamShop"
     >
@@ -46,7 +45,6 @@ export default {
   },
   data() {
     return {
-      orTheOwner: true,
       whetherToDisplay: false,
       communique: {
         symbol: null,

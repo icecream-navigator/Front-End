@@ -3,8 +3,12 @@
     <IceCreamShop
       :user="user"
       :iceCreamShop="iceCreamShop"
+      :search="search"
     >
-      <template v-slot:user>
+      <template
+        v-if="user && user.is_admin == false"
+        v-slot:user
+      >
         <button
           id="buttonStar"
           @click="star"
@@ -16,7 +20,10 @@
           Ulubione
         </button>
       </template>
-      <template v-slot:addingACommentAndRating>
+      <template
+        v-if="user && user.is_admin == false"
+        v-slot:addingACommentAndRating
+      >
         <div id="containerCommentAndRating">
           <span>Dodaj komenatrz lub ocene albo oba naraz</span>
           <div id="addCommentOrRating">
@@ -46,7 +53,7 @@
         </div>
       </template>
     </IceCreamShop>
-    <Announcement 
+    <Announcement
       v-if="whetherToDisplay"
       @close="closeTheMessage"
     >
@@ -72,18 +79,13 @@ import axios from 'axios'
 
 export default {
   name: 'IceCreamParlour',
-  props: ['user', 'iceCreamShop'],
+  props: ['user', 'iceCreamShop', 'search'],
   components: {
     IceCreamShop,
     Announcement
   },
   data() {
     return {
-      config: {
-        headers: {
-          Authorization: `Bearer ${this.user.access_token}`
-        }
-      },
       fa: null,
       opinion: null,
       rate: null,
@@ -95,23 +97,47 @@ export default {
     }
   },
   mounted() {
-    this.fa = "fas"
+    if (this.search)
+    {
+      this.fa = "far"
+    }
+    else
+    {
+      this.fa = "fas"
+    }
   },
   methods: {
+    config() {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${this.user.access_token}`
+        }
+      }
+
+      return config
+    },
     star() {
       if (this.fa == "far")
       {
-        axios.post("https://citygame.ga/api/fav/" + this.iceCreamShop.id, this.config)
-          .then(
-            this.fa = "fas"
-          )
+        axios.post("https://citygame.ga/api/fav/" + this.iceCreamShop.id, null, this.config())
+          .then(response => {
+            if (response)
+            {
+              this.fa = "fas"
+              this.$emit("refresh")
+            }
+          })
       }
       else
       {
-        axios.delete("https://citygame.ga/api/unf/" + this.iceCreamShop.id, this.config)
-          .then(
-            this.$emit("refresh")
-          )
+        axios.delete("https://citygame.ga/api/unf/" + this.iceCreamShop.id, this.config())
+          .then(response => {
+            if (response)
+            {
+              this.fa = "far"
+              this.$emit("refresh")
+            }
+          })
       }
     },
     addCommentAndRating() {
@@ -121,7 +147,7 @@ export default {
           {
             opinion: this.opinion
           },
-          this.config)
+          this.config())
       }
       if (this.rate)
       {
@@ -129,7 +155,7 @@ export default {
           {
             rate: this.rate
           },
-          this.config)
+          this.config())
             .then(response => {
               if (response)
               {
