@@ -4,5 +4,9 @@
     width: 100%;
     height: calc(100% - 12.5vw);
     background-color: pink;
+    #map {
+      width: 100%;
+      height: calc(100vh - 12.5vw - 102px);
+    }
   }
 }

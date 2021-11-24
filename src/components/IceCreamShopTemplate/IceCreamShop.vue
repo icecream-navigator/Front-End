@@ -1,6 +1,14 @@
 <template>
   <v-row justify="center">
+    <MglMarker
+      v-if="search"
+      :coordinates="[iceCreamShop.lon, iceCreamShop.lat]"
+      color="blue"
+      @click="dialog = true, comments()"
+      @click.once="commentsInterval"
+    />
     <v-btn
+      v-else
       color="deep-purple lighten-2"
       text
       @click="dialog = true, comments()"
@@ -86,7 +94,6 @@
         <v-card-text>
           <v-container>
             <IceCreamCatalog
-              :orTheOwner="orTheOwner"
               :user="user"
               :iceCreamShop="iceCreamShop"
             />
@@ -121,7 +128,7 @@ export default {
     MglMap,
     MglMarker
   },
-  props: ['orTheOwner', 'user', 'iceCreamShop'],
+  props: ['user', 'iceCreamShop', 'search'],
   data() {
     return {
       dialog: false,

@@ -20,7 +20,7 @@
         Cena: {{ice.price}} zł<br>
         Ilość: {{ice.quantity}}<br>
         <div
-          v-if="orTheOwner"
+          v-if="user && user.is_admin"
           id="buttons"
         >
           <DeleteIce
@@ -35,13 +35,13 @@
           />
         </div>
         <Like
-          v-if="orTheOwner == null"
+          v-if="user && user.is_admin == false"
           :user="user"
           :idIce="ice.id"
         />
       </div>
       <AddIce
-        v-if="orTheOwner"
+        v-if="user && user.is_admin"
         :user="user"
         :IceCreamShop="iceCreamShop"
         @refresh="getDataIce"
@@ -66,7 +66,7 @@ export default {
     UpdateIce,
     Like
   },
-  props: ['orTheOwner', 'user', 'iceCreamShop'],
+  props: ['user', 'iceCreamShop'],
   data() {
     return {
       display: false,
