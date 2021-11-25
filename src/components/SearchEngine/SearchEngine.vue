@@ -39,6 +39,7 @@
         <Markerr
           :user="user"
           :iceCreamShop="iceCreamShop"
+          @refresh="refresh"
         />
       </div>
     </MglMap>
@@ -87,13 +88,7 @@ export default {
     }
   },
   mounted() {
-    axios.get("https://citygame.ga/api/stall/all")
-      .then(response => {
-        if (response)
-        {
-          this.iceCreamShops = response.data
-        }
-      })
+    this.refresh()
   },
   methods: {
     getIceCream() {
@@ -136,6 +131,18 @@ export default {
             }
           })
       })
+    },
+    refresh()
+    {
+      axios.get("https://citygame.ga/api/stall/all")
+      .then(response => {
+        if (response)
+        {
+          this.iceCreamShops = response.data
+        }
+      })
+
+      this.$emit("refresh")
     }
   }
 }

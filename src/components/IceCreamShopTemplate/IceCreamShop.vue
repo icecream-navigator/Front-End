@@ -5,14 +5,12 @@
       :coordinates="[iceCreamShop.lon, iceCreamShop.lat]"
       color="blue"
       @click="dialog = true, comments()"
-      @click.once="commentsInterval"
     />
     <v-btn
       v-else
       color="deep-purple lighten-2"
       text
       @click="dialog = true, comments()"
-      @click.once="commentsInterval"
     >
       SZCZEGÓŁY
     </v-btn>
@@ -149,19 +147,12 @@ export default {
     },
     comments() {
       axios.get("https://citygame.ga/api/stall/show/" + this.iceCreamShop.id + "/opinions")
-        .then(response =>
-        {
-          this.opinions = response.data[0].opinions
-        })
-    },
-    commentsInterval() {
-      setInterval(() => {
-        axios.get("https://citygame.ga/api/stall/show/" + this.iceCreamShop.id + "/opinions")
-          .then(response =>
+        .then(response => {
+          if (response)
           {
             this.opinions = response.data[0].opinions
-          })
-      }, 5000)
+          }
+        })
     }
   }
 }

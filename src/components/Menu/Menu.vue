@@ -81,12 +81,16 @@ export default{
     user(data) {
       if (data.social_user)
       {
+        this.userData = data.social_user
         this.avatarImage = data.social_user.avatar
-        this.selectedComponent1 = null
+
+        this.selectedComponent1 = FavoritesB
       }
       else
       {
+        this.userData = data
         this.avatarImage = data.user_avatar
+
         if (data.is_admin)
         {
           this.selectedComponent1 = CompanyManagmentB
@@ -100,9 +104,8 @@ export default{
       this.avatarSize = 13
 
       this.selectedComponent2 = LogOut
-
-      this.userData = data
-      this.$emit('user', data)
+      
+      this.$emit('user', this.userData)
     },
     logOut() {
       Cookies.remove('email')

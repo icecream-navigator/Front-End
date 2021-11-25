@@ -4,6 +4,7 @@
       :user="user"
       :iceCreamShop="iceCreamShop"
       :search="search"
+      ref="refresh"
     >
       <template
         v-if="user && user.is_admin == false"
@@ -86,7 +87,7 @@ export default {
   },
   data() {
     return {
-      fa: null,
+      fa: "far",
       opinion: null,
       rate: null,
       whetherToDisplay: false,
@@ -148,7 +149,14 @@ export default {
             opinion: this.opinion
           },
           this.config())
+            .then(response => {
+              if (response)
+              {
+                this.$refs.refresh.comments()
+              }
+            })
       }
+
       if (this.rate)
       {
         axios.post("https://citygame.ga/api/stall/rate/" + this.iceCreamShop.id,

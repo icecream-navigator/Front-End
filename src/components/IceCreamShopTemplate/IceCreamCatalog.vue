@@ -20,7 +20,7 @@
         Cena: {{ice.price}} zł<br>
         Ilość: {{ice.quantity}}<br>
         <div
-          v-if="user && user.is_admin"
+          v-if="user && user.is_admin && search == false"
           id="buttons"
         >
           <DeleteIce
@@ -41,7 +41,7 @@
         />
       </div>
       <AddIce
-        v-if="user && user.is_admin"
+        v-if="user && user.is_admin && search == false"
         :user="user"
         :IceCreamShop="iceCreamShop"
         @refresh="getDataIce"
@@ -66,7 +66,7 @@ export default {
     UpdateIce,
     Like
   },
-  props: ['user', 'iceCreamShop'],
+  props: ['user', 'iceCreamShop', 'search'],
   data() {
     return {
       display: false,
