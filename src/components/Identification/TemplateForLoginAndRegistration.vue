@@ -59,12 +59,9 @@
               <slot name="action"/>
             przez</span>
             <div id="icons">
-              <facebook-login
-                :appId="appId"
-              />
-              <!--<button>
+              <button>
                 <font-awesome :icon="['fab', 'facebook-square']"/>
-              </button>-->
+              </button>
               <GoogleLogin 
                 :params="params"
                 :onSuccess="getTokenGoogle"
@@ -97,7 +94,6 @@
 <script>
 import Announcement from '../Notifications/Announcement.vue'
 
-import facebookLogin from 'facebook-login-vuejs';
 import GoogleLogin from 'vue-google-login'
 
 import Cookies from 'js-cookie'
@@ -107,7 +103,6 @@ export default {
   name: 'TemplateForLoginAndRegistration',
   components: {
     Announcement,
-    facebookLogin,
     GoogleLogin
   },
   props: ['rememberMe'],

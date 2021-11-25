@@ -3,6 +3,7 @@
     :user="user"
     :iceCreamShop="iceCreamShop"
     :search="search"
+    @refresh="refresh"
   />
 </template>
 
@@ -19,6 +20,12 @@ export default {
   },
   components: {
     IceCreamParlour
+  },
+  methods: {
+    refresh()
+    {
+      this.$emit("refresh")
+    }
   }
 }
 </script>
