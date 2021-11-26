@@ -1,29 +1,31 @@
 <template>
-  <v-row justify="center">
-    <v-dialog
-      v-model="dialog"
-      persistent
-      max-width="300px"
-    >
-      <v-card id="card">
-        <div id="content">
-          <slot/>
-        </div>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <div id="containerButton">
-            <v-btn
-              id="buttonOK"
-              color="blue darken-1"
-              @click="dialog = false, close()"
-            >
-              OK
-            </v-btn>
+  <article>
+    <v-row justify="center">
+      <v-dialog
+        v-model="dialog"
+        persistent
+        max-width="300px"
+      >
+        <v-card id="card">
+          <div id="content">
+            <slot/>
           </div>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-row>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <div id="containerButton">
+              <v-btn
+                id="buttonOK"
+                color="blue darken-1"
+                @click="dialog = false, close()"
+              >
+                OK
+              </v-btn>
+            </div>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-row>
+  </article>
 </template>
 
 <script>

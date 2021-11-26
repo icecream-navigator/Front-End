@@ -12,67 +12,74 @@
         persistent
         max-width="1000px"
       >
-        <v-card id="card" class="cardWithMap">
-          <button
-            id="close"
-            @click="dialog = false"
-          >
-            <font-awesome :icon="['fas', 'times']"/>
-          </button>
-          <v-card-text>
-            <v-container>
-              <div id="uploadImage">
-                <div id="addImage">
-                  <span id="span1">Dodaj zdjęcie lodziarni:</span>
-                  <input id="input" type="file" @change="onFileSelected">
-                  <span id="span2">(niewymagane)</span>
-                </div>
-                <img id="image" style="height: 210px" :src="image">
-              </div>
-              <slot name="v-text-field"/>
-              <v-text-field
-                v-model="name"
-                label="Nazwa lodziarni"
-                required
-              ></v-text-field>
-              <span id="span3">Godziny otwarcia:</span><br>
-              <TimeFromUpdate
-                :time="timeOpen"
-                @time="timeFrom"
-              />
-              <TimeToUpdate
-                :time="timeClose"
-                @time="timeTo"
-              />
-            </v-container>
-          </v-card-text>
-          <MglMap
-            id="map"
-            :accessToken="accessToken"
-            :mapStyle="mapStyle"
-            :center="center"
-            :zoom="zoom"
-            @click="addMarker"
-          >
-            <MglGeocoderControl :accessToken="accessToken"/>
-            <MglMarker
-              v-if="coordinates"
-              :coordinates="coordinates"
-              color="blue"
-            />
-          </MglMap>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn
-              id="buttonLogIn"
-              block
-              color="blue darken-1"
-              @click="sendingData"
+        <article>
+          <v-card id="card" class="cardWithMap">
+            <button
+              id="close"
+              @click="dialog = false"
             >
-              ZAPISZ ZMIANY
-            </v-btn>
-          </v-card-actions>
-        </v-card>
+              <font-awesome :icon="['fas', 'times']"/>
+            </button>
+            <v-card-text>
+              <v-container>
+                <section>
+                  <div id="uploadImage">
+                    <div id="addImage">
+                      <span id="span1">Dodaj zdjęcie lodziarni:</span>
+                      <input id="input" type="file" @change="onFileSelected">
+                      <span id="span2">(niewymagane)</span>
+                    </div>
+                    <img id="image" style="height: 210px" :src="image">
+                  </div>
+                </section>
+                <section>
+                  <v-text-field
+                    v-model="name"
+                    label="Nazwa lodziarni"
+                    required
+                  ></v-text-field>
+                </section>
+                <section>
+                  <span id="span3">Godziny otwarcia:</span><br>
+                  <TimeFromUpdate
+                    :time="timeOpen"
+                    @time="timeFrom"
+                  />
+                  <TimeToUpdate
+                    :time="timeClose"
+                    @time="timeTo"
+                  />
+                </section>
+              </v-container>
+            </v-card-text>
+            <MglMap
+              id="map"
+              :accessToken="accessToken"
+              :mapStyle="mapStyle"
+              :center="center"
+              :zoom="zoom"
+              @click="addMarker"
+            >
+              <MglGeocoderControl :accessToken="accessToken"/>
+              <MglMarker
+                v-if="coordinates"
+                :coordinates="coordinates"
+                color="blue"
+              />
+            </MglMap>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                id="buttonLogIn"
+                block
+                color="blue darken-1"
+                @click="sendingData"
+              >
+                ZAPISZ ZMIANY
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </article>
       </v-dialog>
     </v-row>
     <Announcement 

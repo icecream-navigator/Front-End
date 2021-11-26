@@ -1,53 +1,59 @@
 <template>
-  <div id="containerIceCreamCatalog">
-    <v-btn
-      id="iceCreamCatalog"
-      elevation="2"
-      small
-      @click="getDataIce(), showTheIceCream()"
-    >
-      Katolog lodów
-    </v-btn>
-    <div v-if="display" id="ice-cream">
-      <div v-for="ice in iceCream" :key="ice.id" id="ice">
-        <div id="like">
-          <font-awesome id="icon" :icon="['fas', 'star']"/>
-          {{ice.votes}}
+  <article>
+    <div id="containerIceCreamCatalog">
+      <v-btn
+        id="iceCreamCatalog"
+        elevation="2"
+        small
+        @click="getDataIce(), showTheIceCream()"
+      >
+        Katolog lodów
+      </v-btn>
+      <div v-if="display" id="ice-cream">
+        <div v-for="ice in iceCream" :key="ice.id" id="ice">
+          <section>
+            <div id="like">
+              <font-awesome id="icon" :icon="['fas', 'star']"/>
+              {{ice.votes}}
+            </div>
+            <b>{{ice.flavour}}</b><br>
+            {{ice.type}}<br>
+            {{ice.form}}<br>
+            Cena: {{ice.price}} zł<br>
+            Ilość: {{ice.quantity}}<br>
+            <div
+              v-if="user && user.is_admin && search == null"
+              id="buttons"
+            >
+              <DeleteIce
+                :user="user"
+                :idIce="ice.id"
+                @refresh="getDataIce"
+              />
+              <UpdateIce
+                :user="user"
+                :ice="ice"
+                @refresh="getDataIce"
+              />
+            </div>
+            <Like
+              v-if="user && user.is_admin == false"
+              :user="user"
+              :idIce="ice.id"
+            />
+          </section>
         </div>
-        <b>{{ice.flavour}}</b><br>
-        {{ice.type}}<br>
-        {{ice.form}}<br>
-        Cena: {{ice.price}} zł<br>
-        Ilość: {{ice.quantity}}<br>
-        <div
-          v-if="user && user.is_admin && search == false"
-          id="buttons"
-        >
-          <DeleteIce
+        <section>
+          <AddIce
+            v-if="user && user.is_admin && search == null"
             :user="user"
-            :idIce="ice.id"
+            :IceCreamShop="iceCreamShop"
             @refresh="getDataIce"
           />
-          <UpdateIce
-            :user="user"
-            :ice="ice"
-            @refresh="getDataIce"
-          />
-        </div>
-        <Like
-          v-if="user && user.is_admin == false"
-          :user="user"
-          :idIce="ice.id"
-        />
+        </section>
       </div>
-      <AddIce
-        v-if="user && user.is_admin && search == false"
-        :user="user"
-        :IceCreamShop="iceCreamShop"
-        @refresh="getDataIce"
-      />
     </div>
-  </div>
+  </article>
 </template>
 
 <script>

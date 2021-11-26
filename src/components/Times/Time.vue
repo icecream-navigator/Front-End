@@ -1,20 +1,22 @@
 <template>
-  <div>
-    <div class="time">
-      <slot name="content"/>&nbsp;
-      <div class="area">{{time.hour}}</div>
-      <div class="buttons">
-      <div class="button" @click="addAnHour">▲</div>
-      <div class="button" @click="subtractTheHour">▼</div>
-      </div>
-      :
-      <div class="area">{{time.minute}}</div>
-      <div class="buttons">
-      <div class="button" @click="addAMinute">▲</div>
-      <div class="button" @click="substractAMinute">▼</div>
+  <section>
+    <div>
+      <div class="time">
+        <slot name="content"/>&nbsp;
+        <div class="area">{{time.hour}}</div>
+        <div class="buttons">
+        <div class="button" @click="addAnHour">▲</div>
+        <div class="button" @click="subtractTheHour">▼</div>
+        </div>
+        :
+        <div class="area">{{time.minute}}</div>
+        <div class="buttons">
+        <div class="button" @click="addAMinute">▲</div>
+        <div class="button" @click="substractAMinute">▼</div>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

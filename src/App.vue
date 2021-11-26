@@ -1,18 +1,22 @@
 <template>
   <v-app>
     <div id="mainContainer">
-      <Menu
-        @component="replaceComponent"
-        @user="user"
-        @open="open"
-        ref="refresh"
-      />
+      <header>
+        <Menu
+          @component="replaceComponent"
+          @user="user"
+          @open="open"
+          ref="refresh"
+        />
+      </header>
+      <main id="main">
       <component
         :is="selectedComponent"
         ref="open"
         :user="userData"
         @refresh="refresh"
       />
+      </main>
     </div>
   </v-app>
 </template>
@@ -51,7 +55,10 @@ export default {
       this.$refs.open.getData()
     },
     refresh() {
-      this.$refs.refresh.refresh()
+      if (this.selectedComponent == SearchEngine)
+      {
+        this.$refs.refresh.refresh()
+      }
     }
   }
 }
@@ -93,6 +100,9 @@ export default {
     #mainContainer {
       height: 100%;
       font-family: 'Avenir', Helvetica, Arial, sans-serif;
+      #main {
+        height: 100;
+      }
     }
   }
 }
@@ -107,12 +117,16 @@ export default {
     overflow-y: auto;
 
     #mainContainer {
-    height: 100%;
+      height: 100%;
 
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+      font-family: 'Avenir', Helvetica, Arial, sans-serif;
 
-    display: flex;
-    flex-direction: row;
+      display: flex;
+      flex-direction: row;
+      #main {
+        margin-left: 15.6%;
+        width: 84.4%;
+      }
     }
   }
 }

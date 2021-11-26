@@ -1,20 +1,22 @@
 <template>
-  <div id="ice">
-    <input class="input" type="text" v-model="ice.flavour"/>
-    <input class="input" type="text" v-model="ice.type"/>
-    <input class="input" type="text" v-model="ice.form"/>
-    <input class="input" type="text" v-model="ice.price"/>
-    <input class="input" type="text" v-model="ice.quantity"/>
-    <v-btn
-      id ="buttonAdd"
-      color="accent"
-      elevation="2"
-      small
-      @click="addIce"
-    >
-      DODAJ
-    </v-btn>
-  </div>
+  <article>
+    <div id="ice">
+      <input class="input" type="text" placeholder="smak" v-model="ice.flavour"/>
+      <input class="input" type="text" placeholder="typ" v-model="ice.type"/>
+      <input class="input" type="text" placeholder="forma" v-model="ice.form"/>
+      <input class="input" type="text" placeholder="cena" v-model="ice.price"/>
+      <input class="input" type="text" placeholder="ilość" v-model="ice.quantity"/>
+      <v-btn
+        id ="buttonAdd"
+        color="accent"
+        elevation="2"
+        small
+        @click="addIce"
+      >
+        DODAJ
+      </v-btn>
+    </div>
+  </article>
 </template>
 
 <script>
@@ -26,11 +28,11 @@ export default {
   data() {
     return {
       ice: {
-        flavour: 'smak',
-        type: 'typ',
-        form: 'forma',
-        price: 'cena',
-        quantity: 'ilość'
+        flavour: null,
+        type: null,
+        form: null,
+        price: null,
+        quantity: null
       }
     }
   },
