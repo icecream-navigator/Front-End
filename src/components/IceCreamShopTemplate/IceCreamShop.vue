@@ -1,113 +1,120 @@
 <template>
-  <v-row justify="center">
-    <MglMarker
-      v-if="search"
-      :coordinates="[iceCreamShop.lon, iceCreamShop.lat]"
-      color="blue"
-      @click="dialog = true, comments()"
-    />
-    <v-btn
-      v-else
-      color="deep-purple lighten-2"
-      text
-      @click="dialog = true, comments()"
-    >
-      SZCZEGÓŁY
-    </v-btn>
-    <v-dialog
-      v-model="dialog"
-      persistent
-      max-width="1000px"
-    >
-      <v-card id="card" class="cardIceCreamShop">
-        <button
-          id="close"
-          @click="dialog = false"
-        >
-          <font-awesome :icon="['fas', 'times']"/>
-        </button>
-        <slot name="owner"/>
-        <slot name="user"/>
-        <v-card-text>
-          <v-container>
-            <div id="boxTop">
-              <img id="image" alt="lodziarnia" :src="iceCreamShop.photo_url"/>
-              <div id="boxTopRight">
-                <div id="boxTopRightTop">
-                  <h1>{{iceCreamShop.name}}</h1>
-                  <div
-                    v-if="iceCreamShop.status == 'Closed'"
-                    id="status"
-                    style="background-color: red"
-                  >
-                    <span id="stringStatus">Zamknięte</span>
+  <article>
+    <v-row justify="center">
+      <MglMarker
+        v-if="search"
+        :coordinates="[iceCreamShop.lon, iceCreamShop.lat]"
+        color="blue"
+        @click="dialog = true, comments()"
+      />
+      <v-btn
+        v-else
+        color="deep-purple lighten-2"
+        text
+        @click="dialog = true, comments()"
+      >
+        SZCZEGÓŁY
+      </v-btn>
+      <v-dialog
+        v-model="dialog"
+        persistent
+        max-width="1000px"
+      >
+        <v-card id="card" class="cardIceCreamShop">
+          <button
+            id="close"
+            @click="dialog = false"
+          >
+            <font-awesome :icon="['fas', 'times']"/>
+          </button>
+          <section>
+            <slot name="owner"/>
+            <slot name="user"/>
+          </section>
+          <section>
+            <v-card-text>
+              <v-container>
+                <div id="boxTop">
+                  <img id="image" alt="lodziarnia" :src="iceCreamShop.photo_url"/>
+                  <div id="boxTopRight">
+                    <div id="boxTopRightTop">
+                      <h1>{{iceCreamShop.name}}</h1>
+                      <div
+                        v-if="iceCreamShop.status == 'Closed'"
+                        id="status"
+                        style="background-color: red"
+                      >
+                        <span id="stringStatus">Zamknięte</span>
+                      </div>
+                      <div
+                        v-else
+                        id="status"
+                        style="background-color: yellowgreen"
+                      >
+                        <span id="stringStatus">Otwarte</span>
+                      </div>
+                    </div>
+                    <span v-if="iceCreamShop.place_name" id="address">
+                      {{iceCreamShop.town + " " + iceCreamShop.postal_code + ", " + iceCreamShop.place_name + ", " + iceCreamShop.street}}
+                    </span>
+                    <span v-else id="address">
+                      {{iceCreamShop.town + " " + iceCreamShop.postal_code + ", " + iceCreamShop.street}}
+                    </span>
+                    <div id="rating">
+                      <v-rating
+                        :value="iceCreamShop.rate"
+                        color="blue"
+                        dense
+                        half-increments
+                        readonly
+                      ></v-rating>
+                      <span id="ratingSpan">{{iceCreamShop.rate}} ({{iceCreamShop.rates_time}})</span>
+                    </div>
+                    <div id="openingTime">
+                      Godziny otwarcia:<br>
+                      Od: {{iceCreamShop.open}}<br>
+                      Do: {{iceCreamShop.close}}<br>
+                    </div>
                   </div>
-                  <div
-                    v-else
-                    id="status"
-                    style="background-color: yellowgreen"
-                  >
-                    <span id="stringStatus">Otwarte</span>
-                  </div>
                 </div>
-                <span v-if="iceCreamShop.place_name" id="address">
-                  {{iceCreamShop.town + " " + iceCreamShop.postal_code + ", " + iceCreamShop.place_name + ", " + iceCreamShop.street}}
-                </span>
-                <span v-else id="address">
-                  {{iceCreamShop.town + " " + iceCreamShop.postal_code + ", " + iceCreamShop.street}}
-                </span>
-                <div id="rating">
-                  <v-rating
-                    :value="iceCreamShop.rate"
-                    color="blue"
-                    dense
-                    half-increments
-                    readonly
-                  ></v-rating>
-                  <span id="ratingSpan">{{iceCreamShop.rate}} ({{iceCreamShop.rates_time}})</span>
-                </div>
-                <div id="openingTime">
-                  Godziny otwarcia:<br>
-                  Od: {{iceCreamShop.open}}<br>
-                  Do: {{iceCreamShop.close}}<br>
-                </div>
-              </div>
-            </div>
-            <div/>
-          </v-container>
-        </v-card-text>
-        <MglMap
-          id="map"
-          :accessToken="accessToken"
-          :mapStyle="mapStyle"
-          @load="onMapLoaded"
-          :center="center"
-          :zoom="zoom"
-        >
-          <MglMarker
-            :coordinates="coordinates"
-            color="blue"
-          />
-        </MglMap>
-        <v-card-text>
-          <v-container>
-            <IceCreamCatalog
-              :user="user"
-              :iceCreamShop="iceCreamShop"
+                <div/>
+              </v-container>
+            </v-card-text>
+          </section>
+          <MglMap
+            id="map"
+            :accessToken="accessToken"
+            :mapStyle="mapStyle"
+            @load="onMapLoaded"
+            :center="center"
+            :zoom="zoom"
+          >
+            <MglMarker
+              :coordinates="coordinates"
+              color="blue"
             />
-          </v-container>
-        </v-card-text>
-        <v-card-text>
-          <v-container>
-            <div v-for="opinion in opinions" :key="opinion.id">
-              <Comment :opinion="opinion"/>
-            </div>
-            <slot name="addingACommentAndRating"/>
-          </v-container>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-  </v-row>
+          </MglMap>
+          <v-card-text>
+            <v-container>
+              <IceCreamCatalog
+                :user="user"
+                :iceCreamShop="iceCreamShop"
+                :search="search"
+              />
+            </v-container>
+          </v-card-text>
+          <v-card-text>
+            <v-container>
+              <div v-for="opinion in opinions" :key="opinion.id">
+                <Comment :opinion="opinion"/>
+              </div>
+              <slot name="addingACommentAndRating"/>
+            </v-container>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+    </v-row>
+  </article>
 </template>
 
 <script>

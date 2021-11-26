@@ -1,25 +1,27 @@
 <template>
   <div>
-    <IceCreamShop
-      :user="user"
-      :iceCreamShop="iceCreamShop"
-    >
-      <template v-slot:owner>
-        <div class="update">
-          <v-btn
-            id="trash"
-            @click="confirmationNotification"
-          >
-            <font-awesome :icon="['fas', 'trash']"/>
-          </v-btn>
-          <UpdateIceCreamShop
-            :user="user"
-            :iceCreamShop="iceCreamShop"
-            @refresh="refresh"
-          />
-        </div>
-      </template>
-    </IceCreamShop>
+    <article>
+      <IceCreamShop
+        :user="user"
+        :iceCreamShop="iceCreamShop"
+      >
+        <template v-slot:owner>
+          <div class="update">
+            <v-btn
+              id="trash"
+              @click="confirmationNotification"
+            >
+              <font-awesome :icon="['fas', 'trash']"/>
+            </v-btn>
+            <UpdateIceCreamShop
+              :user="user"
+              :iceCreamShop="iceCreamShop"
+              @refresh="refresh"
+            />
+          </div>
+        </template>
+      </IceCreamShop>
+    </article>
     <ConfirmationNotification
       v-if="whetherToDisplay"
       @choice="orContinue"

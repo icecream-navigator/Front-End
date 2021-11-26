@@ -97,14 +97,21 @@ export default {
       this.model.forEach(element => {
         modelString += element.text + " "
       })
-      
-      axios.post("https://citygame.ga/api/icecream/search", { search: modelString })
-        .then(response => {
-          if (response)
-          {
-            this.getICeCreamShop(response.data)
-          }
-        })
+
+      if (modelString)
+      {
+        axios.post("https://citygame.ga/api/icecream/search", { search: modelString })
+          .then(response => {
+            if (response)
+            {
+              this.getICeCreamShop(response.data)
+            }
+          })
+      }
+      else
+      {
+        this.refresh()
+      }
     },
     getUniqueId(iceCream) {
       var allStallId = []
@@ -157,8 +164,8 @@ export default {
 
 @media (orientation: landscape) {
   #containerSerachEngine {
-    margin-left: 15.6%;
-    width: 84.4%;
+    width: 100%;
+    height: 100%;
     background-color: pink;
     .container {
       padding: 24px;

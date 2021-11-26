@@ -1,38 +1,40 @@
 <template>
   <div>
-    <TemplateForLoginAndRegistration 
-      @hideMenu="hideMenu" 
-      @emailAndPassword="sendingData"
-      >
-      <template v-slot:buttonInscription>
-        REJESTRACJA
-      </template>
-      <template v-slot:v-text-field>
-        <v-text-field
-          v-model="registration.name"
-          label="Nazwa"
-          required
-        ></v-text-field>
-      </template>
-      <template v-slot:repeatPassword>
-        <v-text-field
-          v-model="registration.password_confirmation"
-          type="password"
-          label="Powtórz hasło"
-          required
-        ></v-text-field>
-      </template>
-      <template v-slot:checkBox>
-        <v-checkbox
-          v-model="registration.is_admin"
-          label="Jestem właścicielem firmy"
-          hide-details
-        ></v-checkbox>
-      </template>
-      <template v-slot:action>
-        zarejestruj się
-      </template>
-    </TemplateForLoginAndRegistration>
+    <article>
+      <TemplateForLoginAndRegistration 
+        @hideMenu="hideMenu" 
+        @emailAndPassword="sendingData"
+        >
+        <template v-slot:buttonInscription>
+          REJESTRACJA
+        </template>
+        <template v-slot:v-text-field>
+          <v-text-field
+            v-model="registration.name"
+            label="Nazwa"
+            required
+          ></v-text-field>
+        </template>
+        <template v-slot:repeatPassword>
+          <v-text-field
+            v-model="registration.password_confirmation"
+            type="password"
+            label="Powtórz hasło"
+            required
+          ></v-text-field>
+        </template>
+        <template v-slot:checkBox>
+          <v-checkbox
+            v-model="registration.is_admin"
+            label="Jestem właścicielem firmy"
+            hide-details
+          ></v-checkbox>
+        </template>
+        <template v-slot:action>
+          zarejestruj się
+        </template>
+      </TemplateForLoginAndRegistration>
+    </article>
     <Announcement 
       v-if="whetherToDisplay"
       @close="closeTheMessage"

@@ -1,5 +1,5 @@
 <template>
-  <div id="containerMain">
+  <header id="containerMain">
     <div id="leftBox">
       <h1>ICN</h1>
       <h2>Your Ice Cream Navigator</h2>
@@ -9,8 +9,10 @@
         <img id ="logo" alt="logo" src="@/assets/logo.png">
       </div>
     </div>
-    <div id="footer">Robert Klinger i Krzysztof Picur © 2021 wszelkie prawa zastrzeżone</div>
-    </div>
+    <footer>
+      <div id="footer">Robert Klinger i Krzysztof Picur © 2021 wszelkie prawa zastrzeżone</div>
+    </footer>
+  </header>
 </template>
 
 <script>
@@ -24,8 +26,8 @@ export default{
 
 @media (orientation: landscape) {
   #containerMain {
-    margin-left: 15.6%;
-    width: 84.4%;
+    width: 100%;
+    height: 100%;
 
     background-color: pink;
 

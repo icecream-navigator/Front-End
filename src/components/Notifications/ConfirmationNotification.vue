@@ -1,35 +1,37 @@
 <template>
-  <v-row justify="center">
-    <v-dialog
-      v-model="dialog"
-      persistent
-      max-width="300px"
-    >
-      <v-card id="card">
-        <div id="content">
-          <slot/>
-        </div>
-        <v-card-actions id="c">
-          <div id="containerButtons">
-            <v-btn
-              class="button"
-              color="blue darken-1"
-              @click="dialog = false, choice = true, sendSelection()"
-            >
-              TAK
-            </v-btn>
-            <v-btn
-              class="button"
-              color="blue darken-1"
-              @click="dialog = false, choice = false, sendSelection()"
-            >
-              NIE
-            </v-btn>
+  <article>
+    <v-row justify="center">
+      <v-dialog
+        v-model="dialog"
+        persistent
+        max-width="300px"
+      >
+        <v-card id="card">
+          <div id="content">
+            <slot/>
           </div>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-row>
+          <v-card-actions id="c">
+            <div id="containerButtons">
+              <v-btn
+                class="button"
+                color="blue darken-1"
+                @click="dialog = false, choice = true, sendSelection()"
+              >
+                TAK
+              </v-btn>
+              <v-btn
+                class="button"
+                color="blue darken-1"
+                @click="dialog = false, choice = false, sendSelection()"
+              >
+                NIE
+              </v-btn>
+            </div>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-row>
+  </article>
 </template>
 
 <script>

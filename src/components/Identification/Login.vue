@@ -1,25 +1,27 @@
 <template>
   <div>
-    <TemplateForLoginAndRegistration
-      :rememberMe="rememberMe"
-      @hideMenu="hideMenu"
-      @emailAndPassword="sendingData"
-      @user="provideUserData"
-    >
-      <template v-slot:buttonInscription>
-        ZALOGUJ SIĘ
-      </template>
-      <template v-slot:checkBox>
-        <v-checkbox
-          v-model="rememberMe"
-          label="Zapamiętaj mnie"
-          hide-details
-        ></v-checkbox>
-      </template>
-      <template v-slot:action>
-        zaloguj się
-      </template>
-    </TemplateForLoginAndRegistration>
+    <article>
+      <TemplateForLoginAndRegistration
+        :rememberMe="rememberMe"
+        @hideMenu="hideMenu"
+        @emailAndPassword="sendingData"
+        @user="provideUserData"
+      >
+        <template v-slot:buttonInscription>
+          ZALOGUJ SIĘ
+        </template>
+        <template v-slot:checkBox>
+          <v-checkbox
+            v-model="rememberMe"
+            label="Zapamiętaj mnie"
+            hide-details
+          ></v-checkbox>
+        </template>
+        <template v-slot:action>
+          zaloguj się
+        </template>
+      </TemplateForLoginAndRegistration>
+    </article>
     <Announcement 
       v-if="whetherToDisplay"
       @close="closeTheMessage"

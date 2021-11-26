@@ -5,43 +5,47 @@
         :src="avatarImage"
         :style="{'width': avatarSize + 'vw'}"/>
     </div>
-    <v-app-bar-nav-icon
-      id="buttonMenu"
-      @click = "menuStatusChange">
-    </v-app-bar-nav-icon>
-    <ul :class="currentMenuStatus">
-      <li>
-        <v-btn
-          class="button"
-          @click="menuStatusChange(), eventSearchEngine()"
-        >
-          <b>SZUKAJ LODA</b>
-        </v-btn>
-      </li>
-      <li>
-        <component
-          :is="selectedComponent1"
-          :user="userData"
-          @user="user"
+    <nav>
+      <v-app-bar-nav-icon
+        id="buttonMenu"
+        @click = "menuStatusChange">
+      </v-app-bar-nav-icon>
+      <ul :class="currentMenuStatus">
+        <li>
+          <v-btn
+            class="button"
+            @click="menuStatusChange(), eventSearchEngine()"
+          >
+            <b>SZUKAJ LODA</b>
+          </v-btn>
+        </li>
+        <li>
+          <component
+            :is="selectedComponent1"
+            :user="userData"
+            @user="user"
 
-          @event="event"
-          @hideMenu="menuStatusChange"
+            @event="event"
+            @hideMenu="menuStatusChange"
 
-          @open="open"
-          ref="refresh"
-        />
-      </li>
-      <li>
-        <component
-          :is="selectedComponent2"
-          @event="event"
-          @hideMenu="menuStatusChange"
+            @open="open"
+            ref="refresh"
+          />
+        </li>
+        <li>
+          <component
+            :is="selectedComponent2"
+            @event="event"
+            @hideMenu="menuStatusChange"
 
-          @logOut="logOut"
-        />
-      </li>
-    </ul>
-    <center>Robert Klinger i Krzysztof Picur © 2021 wszelkie prawa zastrzeżone</center>
+            @logOut="logOut"
+          />
+        </li>
+      </ul>
+    </nav>
+    <footer>
+      <center>Robert Klinger i Krzysztof Picur © 2021 wszelkie prawa zastrzeżone</center>
+    </footer>
   </div>
 </template>
 

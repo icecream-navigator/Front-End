@@ -1,66 +1,74 @@
 <template>
-  <div id="containerCompanyManagment">
-    <v-card
-      v-for="favorite in favorites" :key="favorite.id"
-      class="card"
-      width="374"
-    >
-      <template slot="progress">
-        <v-progress-linear
-          color="deep-purple"
-          height="10"
-          indeterminate
-        ></v-progress-linear>
-      </template>
+  <article>
+    <div id="containerCompanyManagment">
+      <v-card
+        v-for="favorite in favorites" :key="favorite.id"
+        class="card"
+        width="374"
+      >
+        <template slot="progress">
+          <v-progress-linear
+            color="deep-purple"
+            height="10"
+            indeterminate
+          ></v-progress-linear>
+        </template>
 
-      <v-img
-        height="250"
-        :src="favorite.photo_url"
-      ></v-img>
+        <v-img
+          height="250"
+          :src="favorite.photo_url"
+        ></v-img>
 
-      <v-card-title>{{favorite.name}}</v-card-title>
+        <section>
+          <v-card-title>{{favorite.name}}</v-card-title>
+        </section>
 
-      <v-card-text>
-        <v-row
-          align="center"
-          class="mx-0"
-        >
-          <v-rating
-            :value="favorite.rate"
-            color="amber"
-            dense
-            half-increments
-            readonly
-            size="14"
-          ></v-rating>
+        <v-card-text>
+          <section>
+            <v-row
+              align="center"
+              class="mx-0"
+            >
+              <v-rating
+                :value="favorite.rate"
+                color="amber"
+                dense
+                half-increments
+                readonly
+                size="14"
+              ></v-rating>
 
-          <div v-if="favorite.rate" class="grey--text ms-4">
-            {{favorite.rate + " (" + favorite.rates_time + ")"}}
-          </div>
-        </v-row>
+              <div v-if="favorite.rate" class="grey--text ms-4">
+                {{favorite.rate + " (" + favorite.rates_time + ")"}}
+              </div>
+            </v-row>
+          </section>
 
-        <div v-if="favorite.place_name" class="my-4 text-subtitle-1">
-          {{favorite.town + " " + favorite.postal_code + ", " + favorite.place_name + ", "  + favorite.street}}
+          <section>
+            <div v-if="favorite.place_name" class="my-4 text-subtitle-1">
+              {{favorite.town + " " + favorite.postal_code + ", " + favorite.place_name + ", "  + favorite.street}}
+            </div>
+
+            <div v-else class="my-4 text-subtitle-1">
+              {{favorite.town + " " + favorite.postal_code + ", "  + favorite.street}}
+            </div>
+          </section>
+
+        </v-card-text>
+        <div id="buttonDetails">
+          <v-divider class="mx-4"></v-divider>
+
+          <v-card-actions>
+            <IceCreamParlour
+              :user="user"
+              :iceCreamShop="favorite"
+              @refresh="getData"
+            />
+          </v-card-actions>
         </div>
-
-        <div v-else class="my-4 text-subtitle-1">
-          {{favorite.town + " " + favorite.postal_code + ", "  + favorite.street}}
-        </div>
-
-      </v-card-text>
-      <div id="buttonDetails">
-        <v-divider class="mx-4"></v-divider>
-
-        <v-card-actions>
-          <IceCreamParlour
-            :user="user"
-            :iceCreamShop="favorite"
-            @refresh="getData"
-          />
-        </v-card-actions>
-      </div>
-    </v-card>
-  </div>
+      </v-card>
+    </div>
+  </article>
 </template>
 
 <script>
@@ -103,8 +111,8 @@ export default {
 
 @media (orientation: landscape) {
   #containerCompanyManagment {
-    margin-left: 15.6%;
-    width: 84.4%;
+    width: 100%;
+    height: 100%;
     background-color: pink;
 
     display: flex;

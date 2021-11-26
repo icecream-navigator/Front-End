@@ -59,9 +59,6 @@
               <slot name="action"/>
             przez</span>
             <div id="icons">
-              <button>
-                <font-awesome :icon="['fab', 'facebook-square']"/>
-              </button>
               <GoogleLogin 
                 :params="params"
                 :onSuccess="getTokenGoogle"

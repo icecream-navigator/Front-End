@@ -1,21 +1,23 @@
 <template>
-  <div id="containerComment">
-    <div id="profile">
-      <img
-        alt="avatar"
-        :src="opinion.author_avatar"
-      />
-    </div>
-    <div id="topBox">
-      <div id="topBoxTop">
-        <span id="author">{{opinion.author}}</span>
-        <span id="createdAt">{{opinion.created_at}}</span>
+  <section>
+    <div id="containerComment">
+      <div id="profile">
+        <img
+          alt="avatar"
+          :src="opinion.author_avatar"
+        />
       </div>
-      <div id="opinion">
-        {{opinion.opinion}}
+      <div id="topBox">
+        <div id="topBoxTop">
+          <span id="author">{{opinion.author}}</span>
+          <span id="createdAt">{{opinion.created_at}}</span>
+        </div>
+        <div id="opinion">
+          {{opinion.opinion}}
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

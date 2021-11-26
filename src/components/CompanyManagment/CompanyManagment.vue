@@ -1,73 +1,83 @@
 <template>
-  <div id="containerCompanyManagment">
-    <div id="addingAnIceCreamParlor">
-      <AddingAnIceCreamParlor
-        :user="user"
-        @refresh="getData"
-      />
-    </div>
-    <v-card
-      v-for="iceCreamShop in companyManagment" :key="iceCreamShop.id"
-      class="card"
-      width="374"
-    >
-      <template slot="progress">
-        <v-progress-linear
-          color="deep-purple"
-          height="10"
-          indeterminate
-        ></v-progress-linear>
-      </template>
-
-      <v-img
-        height="250"
-        :src="iceCreamShop.photo_url"
-      ></v-img>
-
-      <v-card-title>{{iceCreamShop.name}}</v-card-title>
-
-      <v-card-text>
-        <v-row
-          align="center"
-          class="mx-0"
-        >
-          <v-rating
-            :value="iceCreamShop.rate"
-            color="amber"
-            dense
-            half-increments
-            readonly
-            size="14"
-          ></v-rating>
-
-          <div v-if="iceCreamShop.rate" class="grey--text ms-4">
-            {{iceCreamShop.rate + " (" + iceCreamShop.rates_time + ")"}}
-          </div>
-        </v-row>
-
-        <div v-if="iceCreamShop.place_name" class="my-4 text-subtitle-1">
-          {{iceCreamShop.town + " " + iceCreamShop.postal_code + ", " + iceCreamShop.place_name + ", "  + iceCreamShop.street}}
-        </div>
-
-        <div v-else class="my-4 text-subtitle-1">
-          {{iceCreamShop.town + " " + iceCreamShop.postal_code + ", "  + iceCreamShop.street}}
-        </div>
-
-      </v-card-text>
-      <div id="buttonDetails">
-        <v-divider class="mx-4"></v-divider>
-
-        <v-card-actions>
-          <ModifitedIceCreamShop
-            :user="user"
-            :iceCreamShop="iceCreamShop"
-            @delet="deleteIceCreamShop"
-            @refresh="getData"
-          />
-        </v-card-actions>
+  <article>
+    <div id="containerCompanyManagment">
+      <div id="addingAnIceCreamParlor">
+        <AddingAnIceCreamParlor
+          :user="user"
+          @refresh="getData"
+        />
       </div>
-    </v-card>
-  </div>
+      <v-card
+        v-for="iceCreamShop in companyManagment" :key="iceCreamShop.id"
+        class="card"
+        width="374"
+      >
+        <article>
+          <template slot="progress">
+            <v-progress-linear
+              color="deep-purple"
+              height="10"
+              indeterminate
+            ></v-progress-linear>
+          </template>
+
+          <v-img
+            height="250"
+            :src="iceCreamShop.photo_url"
+          ></v-img>
+
+          <section>
+            <v-card-title>{{iceCreamShop.name}}</v-card-title>
+          </section>
+
+          <v-card-text>
+            <section>
+              <v-row
+                align="center"
+                class="mx-0"
+              >
+                <v-rating
+                  :value="iceCreamShop.rate"
+                  color="amber"
+                  dense
+                  half-increments
+                  readonly
+                  size="14"
+                ></v-rating>
+
+                <div v-if="iceCreamShop.rate" class="grey--text ms-4">
+                  {{iceCreamShop.rate + " (" + iceCreamShop.rates_time + ")"}}
+                </div>
+              </v-row>
+            </section>
+
+            <section>
+              <div v-if="iceCreamShop.place_name" class="my-4 text-subtitle-1">
+                {{iceCreamShop.town + " " + iceCreamShop.postal_code + ", " + iceCreamShop.place_name + ", "  + iceCreamShop.street}}
+              </div>
+
+              <div v-else class="my-4 text-subtitle-1">
+                {{iceCreamShop.town + " " + iceCreamShop.postal_code + ", "  + iceCreamShop.street}}
+              </div>
+            </section>
+
+          </v-card-text>
+          <div id="buttonDetails">
+            <v-divider class="mx-4"></v-divider>
+
+            <v-card-actions>
+              <ModifitedIceCreamShop
+                :user="user"
+                :iceCreamShop="iceCreamShop"
+                @delet="deleteIceCreamShop"
+                @refresh="getData"
+              />
+            </v-card-actions>
+          </div>
+        </article>
+      </v-card>
+    </div>
+  </article>
 </template>
 
 <script>
@@ -116,8 +126,8 @@ export default {
 
 @media (orientation: landscape) {
   #containerCompanyManagment {
-    margin-left: 15.6%;
-    width: 84.4%;
+    width: 100%;
+    height: 100%;
     background-color: pink;
 
     display: flex;
