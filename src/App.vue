@@ -1,21 +1,16 @@
 <template>
   <v-app>
     <div id="mainContainer">
+
       <header>
         <Menu
           @component="replaceComponent"
           @user="user"
-          @open="open"
           ref="refresh"
         />
       </header>
       <main id="main">
-      <component
-        :is="selectedComponent"
-        ref="open"
-        :user="userData"
-        @refresh="refresh"
-      />
+        <router-view :user="userData"/>
       </main>
     </div>
   </v-app>
@@ -24,23 +19,13 @@
 <script>
 import Menu from './components/Menu/Menu.vue'
 
-import Main from './components/MainPage/Main.vue'
-import SearchEngine from './components/SearchEngine/SearchEngine.vue'
-import CompanyManagment from './components/CompanyManagment/CompanyManagment.vue'
-import Favorites from './components/Favorites/Favorites.vue'
-
 export default {
   name: 'App',
   components: {
-    Menu,
-    Main,
-    SearchEngine,
-    CompanyManagment,
-    Favorites
+    Menu
   },
   data() {
     return {
-      selectedComponent: Main,
       userData: null
     }
   },
@@ -51,11 +36,8 @@ export default {
     user(data) {
       this.userData = data
     },
-    open() {
-      this.$refs.open.getData()
-    },
     refresh() {
-      if (this.selectedComponent == SearchEngine)
+      if (this.selectedComponent == 'SearchEngine')
       {
         this.$refs.refresh.refresh()
       }
@@ -93,6 +75,11 @@ export default {
   margin: 1rem;
 }
 
+a {
+  text-decoration: none; 
+  color: inherit;
+}
+
 @media (orientation: portrait) {
   html, body {
     height: 100%;
@@ -102,6 +89,7 @@ export default {
       font-family: 'Avenir', Helvetica, Arial, sans-serif;
       #main {
         height: 100;
+        background-color: pink;
       }
     }
   }
@@ -126,6 +114,7 @@ export default {
       #main {
         margin-left: 15.6%;
         width: 84.4%;
+        background-color: pink;
       }
     }
   }

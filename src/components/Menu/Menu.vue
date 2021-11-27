@@ -12,34 +12,57 @@
       </v-app-bar-nav-icon>
       <ul :class="currentMenuStatus">
         <li>
-          <v-btn
-            class="button"
-            @click="menuStatusChange(), eventSearchEngine()"
+          <router-link to="/szukaj">
+            <v-btn
+              class="button"
+              @click="menuStatusChange(), eventSearchEngine()"
+            >
+              <b>SZUKAJ LODA</b>
+            </v-btn>
+          </router-link>
+        </li>
+        <li>
+          <div v-if="selectedComponent1 == 'Login'">
+            <Login
+              @user="user"
+              @hideMenu="menuStatusChange"
+            />
+          </div>
+          <router-link
+            v-if="selectedComponent1 == 'FavoritesB'"
+            to="/ulubione"
           >
-            <b>SZUKAJ LODA</b>
-          </v-btn>
+            <FavoritesB
+              ref="refresh"
+              :user="userData"
+              @event="event"
+              @hideMenu="menuStatusChange"
+            />
+          </router-link>
+          <router-link
+            v-if="selectedComponent1 == 'CompanyManagmentB'"
+            to="/zarzadzanie"
+          >
+            <CompanyManagmentB
+              @event="event"
+              @hideMenu="menuStatusChange"
+            />
+          </router-link>
         </li>
         <li>
-          <component
-            :is="selectedComponent1"
-            :user="userData"
-            @user="user"
-
-            @event="event"
-            @hideMenu="menuStatusChange"
-
-            @open="open"
-            ref="refresh"
-          />
-        </li>
-        <li>
-          <component
-            :is="selectedComponent2"
-            @event="event"
-            @hideMenu="menuStatusChange"
-
-            @logOut="logOut"
-          />
+          <div v-if="selectedComponent2 == 'Registration'">
+            <Registration @hideMenu="menuStatusChange"/>
+          </div>
+          <router-link
+            v-else
+            to="/"
+          >
+            <LogOut
+              @event="event"
+              @hideMenu="menuStatusChange"
+              @logOut="logOut"
+            />
+          </router-link>
         </li>
       </ul>
     </nav>
@@ -72,8 +95,8 @@ export default{
   },
   data() {
     return {
-      selectedComponent1: Login,
-      selectedComponent2: Registration,
+      selectedComponent1: 'Login',
+      selectedComponent2: 'Registration',
       userData: null,
       avatarImage: image,
       avatarSize: 4.15,
@@ -88,7 +111,7 @@ export default{
         this.userData = data.social_user
         this.avatarImage = data.social_user.avatar
 
-        this.selectedComponent1 = FavoritesB
+        this.selectedComponent1 = 'FavoritesB'
       }
       else
       {
@@ -97,17 +120,17 @@ export default{
 
         if (data.is_admin)
         {
-          this.selectedComponent1 = CompanyManagmentB
+          this.selectedComponent1 = 'CompanyManagmentB'
         }
         else
         {
-          this.selectedComponent1 = FavoritesB
+          this.selectedComponent1 = 'FavoritesB'
         }
       }
 
       this.avatarSize = 13
 
-      this.selectedComponent2 = LogOut
+      this.selectedComponent2 = 'LogOut'
       
       this.$emit('user', this.userData)
     },
@@ -123,8 +146,8 @@ export default{
       this.avatarImage = image
       this.avatarSize = 4.15
 
-      this.selectedComponent1 = Login
-      this.selectedComponent2 = Registration
+      this.selectedComponent1 = 'Login'
+      this.selectedComponent2 = 'Registration'
     },
     menuStatusChange() {
       if (this.menu)
@@ -146,9 +169,6 @@ export default{
       {
         this.$emit('component', component)
       }
-    },
-    open() {
-      this.$emit('open')
     },
     refresh() {
       this.$refs.refresh.refresh()
