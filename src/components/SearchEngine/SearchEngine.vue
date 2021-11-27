@@ -166,7 +166,6 @@ export default {
   #containerSerachEngine {
     width: 100%;
     height: 100%;
-    background-color: pink;
     .container {
       padding: 24px;
     }

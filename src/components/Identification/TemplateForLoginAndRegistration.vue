@@ -55,9 +55,11 @@
             </v-btn>
           </v-card-actions>
           <div id="otherLogins">
-            <span>lub
+            <span>
+              lub
               <slot name="action"/>
-            przez</span>
+              przez
+            </span>
             <div id="icons">
               <GoogleLogin 
                 :params="params"

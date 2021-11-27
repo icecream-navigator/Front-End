@@ -87,6 +87,9 @@ export default {
   components: {
     IceCreamParlour
   },
+  mounted() {
+    this.getData()
+  },
   methods: {
     getData() {
       const config = {
@@ -113,7 +116,6 @@ export default {
   #containerCompanyManagment {
     width: 100%;
     height: 100%;
-    background-color: pink;
 
     display: flex;
     flex-direction: row;

@@ -85,7 +85,6 @@
             id="map"
             :accessToken="accessToken"
             :mapStyle="mapStyle"
-            @load="onMapLoaded"
             :center="center"
             :zoom="zoom"
           >
@@ -149,9 +148,6 @@ export default {
     this.map = null
   },
   methods: {
-    onMapLoaded(event) {
-      this.map = event.map
-    },
     comments() {
       axios.get("https://citygame.ga/api/stall/show/" + this.iceCreamShop.id + "/opinions")
         .then(response => {

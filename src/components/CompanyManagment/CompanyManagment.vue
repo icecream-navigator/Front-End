@@ -103,6 +103,9 @@ export default {
       }
     }
   },
+  mounted() {
+    this.getData()
+  },
   methods: {
     getData() {
       axios.get("https://citygame.ga/api/stall/my", this.config)
@@ -128,7 +131,6 @@ export default {
   #containerCompanyManagment {
     width: 100%;
     height: 100%;
-    background-color: pink;
 
     display: flex;
     flex-direction: row;
