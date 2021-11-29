@@ -6,7 +6,7 @@
     </div>
     <div id="rightBox">
       <div id="circle">
-        <img id ="logo" alt="logo" src="@/assets/logo.png">
+        <img id ="logo" alt="logo" src="@/assets/logo.webp">
       </div>
     </div>
     <footer>

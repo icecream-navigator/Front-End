@@ -21,6 +21,7 @@
     "mapbox-gl": "^0.53.1",
     "vue": "^2.6.11",
     "vue-axios": "^3.3.7",
+    "vue-facebook-login-component": "^4.0.2",
     "vue-google-login": "^2.0.5",
     "vue-mapbox": "^0.4.1",
     "vue-mapbox-geocoder": "^0.2.0",

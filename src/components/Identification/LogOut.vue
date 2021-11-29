@@ -4,7 +4,7 @@
       id="buttonPortait"
       class="button"
       @click="logOut(), hideMenu()"
-      >
+    >
       <b>
         WYLOGUJ
       </b>

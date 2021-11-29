@@ -23,7 +23,7 @@
             <font-awesome :icon="['fas', 'times']"/>
           </button>
           <div id="circle">
-            <img id ="logo" alt="logo" src="@/assets/logo.png">
+            <img id ="logo" alt="logo" src="@/assets/logo.webp">
           </div>
           <v-card-text>
             <v-container>
@@ -61,7 +61,19 @@
               przez
             </span>
             <div id="icons">
-              <GoogleLogin 
+              <v-facebook-login-scope
+                app-id=process.env.VUE_APP_ID
+                :params="fbSignInParams"
+                @login="getTokenFacebook"
+              >
+                <button
+                  slot-scope="scope"
+                  @click="scope.login"
+                >
+                  <font-awesome :icon="['fab', 'facebook-square']"/>
+                </button>
+              </v-facebook-login-scope>
+              <GoogleLogin
                 :params="params"
                 :onSuccess="getTokenGoogle"
               >
@@ -93,6 +105,7 @@
 <script>
 import Announcement from '../Notifications/Announcement.vue'
 
+import { VFBLoginScope as VFacebookLoginScope } from 'vue-facebook-login-component'
 import GoogleLogin from 'vue-google-login'
 
 import Cookies from 'js-cookie'
@@ -102,6 +115,7 @@ export default {
   name: 'TemplateForLoginAndRegistration',
   components: {
     Announcement,
+    VFacebookLoginScope,
     GoogleLogin
   },
   props: ['rememberMe'],
@@ -109,7 +123,11 @@ export default {
     dialog: false,
     email: null,
     password: null,
-    appId: process.env.VUE_APP_ID,
+    fbSignInParams: {
+      scope: 'email, name, access_token',
+      return_scopes: true,
+      client_id: process.env.VUE_APP_ID
+    },
     params: {
       client_id: process.env.VUE_APP_CLIENT_ID
     },
@@ -139,6 +157,17 @@ export default {
     provideTheData() {
       this.$emit('emailAndPassword', this.email, this.password)
     },
+    getTokenFacebook() {
+      window.FB.getLoginStatus(response => {
+        if(response.status == 'connected')
+        {
+          this.socialUser._token = response.authResponse.accessToken
+          this.socialUser._provider = 'facebook'
+
+          this.sendingToken()
+        }
+      })
+    },
     getTokenGoogle(googleUser) {
       this.socialUser._token = googleUser.wc.access_token
       this.socialUser._provider = 'google'
@@ -150,19 +179,19 @@ export default {
 
       axios.post('https://citygame.ga/api/provider/callback', this.socialUser)
         .then(response => {
-        if (response)
-        {
-          this.communique.symbol = "check-circle"
-          this.communique.contents = "Akcja się powiodła"
-
-          this.$emit('user', response.data)
-
-          if (this.rememberMe)
+          if (response)
           {
-            Cookies.set('_token', this.socialUser._token)
-            Cookies.set('_provider', this.socialUser._provider)
+            this.communique.symbol = "check-circle"
+            this.communique.contents = "Akcja się powiodła"
+
+            this.$emit('user', response.data)
+
+            if (this.rememberMe)
+            {
+              Cookies.set('_token', this.socialUser._token)
+              Cookies.set('_provider', this.socialUser._provider)
+            }
           }
-        }
         })
         .catch(error => {
           this.communique.symbol = "times-circle"
