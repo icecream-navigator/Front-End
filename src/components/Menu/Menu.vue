@@ -82,7 +82,7 @@ import LogOut from '../Identification/LogOut.vue'
 
 import Cookies from 'js-cookie'
 
-import image from "@/assets/avatar.png"
+import image from "@/assets/avatar.webp"
 
 export default{
   name: 'Menu',
