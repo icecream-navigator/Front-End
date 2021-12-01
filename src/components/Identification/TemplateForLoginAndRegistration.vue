@@ -123,7 +123,6 @@ export default {
     dialog: false,
     email: null,
     password: null,
-    fb: 0,
     fbSignInParams: {
       scope: 'email, name, access_token',
       return_scopes: true,
@@ -159,22 +158,15 @@ export default {
       this.$emit('emailAndPassword', this.email, this.password)
     },
     getTokenFacebook() {
-      if (this.fb)
-      {
-        window.FB.getLoginStatus(response => {
-          if(response.status == 'connected')
-          {
-            this.socialUser._token = response.authResponse.accessToken
-            this.socialUser._provider = 'facebook'
+      window.FB.getLoginStatus(response => {
+        if(response.status == 'connected')
+        {
+          this.socialUser._token = response.authResponse.accessToken
+          this.socialUser._provider = 'facebook'
 
-            this.sendingToken()
-          }
-        })
-      }
-      else
-      {
-        this.fb++;
-      }
+          this.sendingToken()
+        }
+      })
     },
     getTokenGoogle(googleUser) {
       this.socialUser._token = googleUser.wc.access_token
