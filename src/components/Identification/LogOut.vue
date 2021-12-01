@@ -3,7 +3,7 @@
     <v-btn
       id="buttonPortait"
       class="button"
-      @click="logOut(), hideMenu()"
+      @click="logOut(), facebookLogOut(), hideMenu()"
     >
       <b>
         WYLOGUJ
@@ -19,6 +19,14 @@ export default {
     logOut() {
       this.$emit('event', 'Main')
       this.$emit('logOut')  
+    },
+    facebookLogOut() {
+      window.FB.getLoginStatus(response => {
+        if (response.status == 'connected')
+        {
+          window.FB.logout()
+        }
+      })
     },
     hideMenu() {
       this.$emit('hideMenu')
