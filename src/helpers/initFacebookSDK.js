@@ -27,5 +27,4 @@ export function initFacebookSdk() {
     js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js"
     ref.parentNode.insertBefore(js, ref)
   }(document, false))
-
 }
