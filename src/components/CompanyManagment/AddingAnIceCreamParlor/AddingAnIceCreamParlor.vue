@@ -235,7 +235,7 @@ export default {
 
             if (status == 422)
             {
-              this.communique.contents = "Uzupełnij dane"
+              this.communique.contents = "Uzupełnij dane albo skróć nazwe/nazwy"
             }
             else
             {

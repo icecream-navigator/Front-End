@@ -10,7 +10,10 @@
         />
       </header>
       <main id="main">
-        <router-view :user="userData"/>
+        <router-view
+          :user="userData"
+          @refresh="refresh"
+        />
       </main>
     </div>
   </v-app>
@@ -88,7 +91,7 @@ a {
       height: 100%;
       font-family: 'Avenir', Helvetica, Arial, sans-serif;
       #main {
-        height: 100;
+        height: 100vh;
         background-color: pink;
       }
     }

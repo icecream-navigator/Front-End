@@ -171,6 +171,9 @@ export default {
     #boxTop {
       display: flex;
       flex-direction: row;
+      #image {
+        height: 210px;
+      }
       #boxTopRight {
         margin-left: 40px;
         display: flex;
