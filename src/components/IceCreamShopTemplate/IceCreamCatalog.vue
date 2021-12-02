@@ -7,7 +7,7 @@
         small
         @click="getDataIce(), showTheIceCream()"
       >
-        Katolog lodów
+        Katalog lodów
       </v-btn>
       <div v-if="display" id="ice-cream">
         <div v-for="ice in iceCream" :key="ice.id" id="ice">
